@@ -1,6 +1,6 @@
 import UIKit
 
-class NewFormViewController: UIViewController, UITabBarDelegate, UITextFieldDelegate, UIGestureRecognizerDelegate, FolderSelectDelegate, CheckListSelectDelegate {
+class NewFormViewController: UIViewController, UITabBarDelegate, UITextFieldDelegate, UIGestureRecognizerDelegate, FolderSelectDelegate, CheckListSelectDelegate, SubmitDialogDelegate {
     
     
     @IBOutlet weak var tabBar: UITabBar!
@@ -158,28 +158,10 @@ class NewFormViewController: UIViewController, UITabBarDelegate, UITextFieldDele
     
     @IBAction func onSubmitClick(_ sender: Any) {
         
-        let title = "Submit Your Form"
-        let message = "Ready to submit? Make sure your have attached your barcodes and filled in all applicable fields."
-        let alertController = UIAlertController(title: title, message: message, preferredStyle: .alert)
-        
-        alertController.addTextField { (textField) in
-            textField.text = self.form.name
-        }
-        
-        let cancel = UIAlertAction(title: "Cancel", style: .default) { (action) in }
-        alertController.addAction(cancel)
-        
-        let submit = UIAlertAction(title: "Submit", style: .default) { (action) in
-            
-            let textField = alertController.textFields![0] as UITextField
-            self.form.name = textField.text!
-            self.submit()
-            
-            self.dismiss(animated: true, completion: nil)
-        }
-        alertController.addAction(submit)
-        
-        self.present(alertController, animated: true)
+        let dialog = SubmitDialog()
+        dialog.delegate = self
+        dialog.setup()
+        dialog.show()
     }
     
     @IBAction func onAddToFolderClick(_ sender: Any) {
@@ -204,6 +186,14 @@ class NewFormViewController: UIViewController, UITabBarDelegate, UITextFieldDele
                 print(vaccination.uuid)
             }
         }
+    }
+    
+    func onSubmit() {
+        
+        HttpRequest.request(form)
+        
+        self.submit()
+        self.dismiss(animated: true, completion: nil)
     }
     
     @IBAction func onClearClick(_ sender: Any) {

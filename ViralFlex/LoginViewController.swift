@@ -36,16 +36,40 @@ class LoginViewController: UIViewController, UITextFieldDelegate {
         
         let gestUserName = "test@rapid-genomics.com"
         let gestPassword = "1234isnotasafepassword"
-
-        if userName.text != gestUserName || (password.text != gestPassword && password.text != "test") {
-            error.isHidden = false
-            return
+        
+        //        if userName.text != gestUserName || (password.text != gestPassword && password.text != "test") {
+        
+        //        }
+        
+        if let path = Bundle.main.path(forResource: "user", ofType: "json") {
+            do {
+                
+                let data = try Data(contentsOf: URL(fileURLWithPath: path), options: .mappedIfSafe)
+                let jsonResult = try JSONSerialization.jsonObject(with: data, options: .mutableLeaves) as! [Any]
+                for userData in jsonResult {
+                    let user = (userData as! Dictionary<String, AnyObject>)
+                    
+                    if (userName.text == (user["email"] as! String) && password.text == (user["password"] as! String)) {
+                        
+                        let defaults = UserDefaults.standard
+                        let data = NSKeyedArchiver.archivedData(withRootObject: user)
+                        defaults.set(data, forKey: "user")
+                        defaults.synchronize()
+                        
+                        if let controller = self.storyboard?.instantiateViewController(withIdentifier: "mainViewController") {
+                            self.present(controller, animated: true, completion: nil)
+                        }
+                    }
+                }
+            } catch {
+                print(123123123)
+            }
         }
         
+        error.isHidden = false
+        return
         
-        if let controller = self.storyboard?.instantiateViewController(withIdentifier: "mainViewController") {
-            self.present(controller, animated: true, completion: nil)
-        }
+        
     }
     
 }

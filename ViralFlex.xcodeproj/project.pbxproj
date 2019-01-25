@@ -7,7 +7,11 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		880BFC6C21FB1A3D006DAE9A /* httpRequest.swift in Sources */ = {isa = PBXBuildFile; fileRef = 880BFC6B21FB1A3D006DAE9A /* httpRequest.swift */; };
 		882E907D21F1B92300893A67 /* BarcodePictureViewContoller.swift in Sources */ = {isa = PBXBuildFile; fileRef = 882E907C21F1B92200893A67 /* BarcodePictureViewContoller.swift */; };
+		883C003021FB59F1000961F2 /* SubmitDialog.swift in Sources */ = {isa = PBXBuildFile; fileRef = 883C002F21FB59F1000961F2 /* SubmitDialog.swift */; };
+		883C003321FB604A000961F2 /* SubmitDialog.xib in Resources */ = {isa = PBXBuildFile; fileRef = 883C003221FB604A000961F2 /* SubmitDialog.xib */; };
+		883C003721FB7577000961F2 /* user.json in Resources */ = {isa = PBXBuildFile; fileRef = 883C003621FB7577000961F2 /* user.json */; };
 		884788C021DB46EA00AB138A /* Form.swift in Sources */ = {isa = PBXBuildFile; fileRef = 884788BF21DB46EA00AB138A /* Form.swift */; };
 		884788C221DB6AAF00AB138A /* FormTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 884788C121DB6AAF00AB138A /* FormTableViewController.swift */; };
 		884788C421E137D200AB138A /* CheckBox.swift in Sources */ = {isa = PBXBuildFile; fileRef = 884788C321E137D200AB138A /* CheckBox.swift */; };
@@ -67,7 +71,11 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		880BFC6B21FB1A3D006DAE9A /* httpRequest.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = httpRequest.swift; sourceTree = "<group>"; };
 		882E907C21F1B92200893A67 /* BarcodePictureViewContoller.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BarcodePictureViewContoller.swift; sourceTree = "<group>"; };
+		883C002F21FB59F1000961F2 /* SubmitDialog.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SubmitDialog.swift; sourceTree = "<group>"; };
+		883C003221FB604A000961F2 /* SubmitDialog.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = SubmitDialog.xib; sourceTree = "<group>"; };
+		883C003621FB7577000961F2 /* user.json */ = {isa = PBXFileReference; lastKnownFileType = text.json; path = user.json; sourceTree = "<group>"; };
 		884788BF21DB46EA00AB138A /* Form.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Form.swift; sourceTree = "<group>"; };
 		884788C121DB6AAF00AB138A /* FormTableViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FormTableViewController.swift; sourceTree = "<group>"; };
 		884788C321E137D200AB138A /* CheckBox.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CheckBox.swift; sourceTree = "<group>"; };
@@ -142,6 +150,17 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		883C003121FB5AAA000961F2 /* dialog */ = {
+			isa = PBXGroup;
+			children = (
+				88480EED21ED838800FD90E1 /* Dialog.xib */,
+				88480EEF21ED879A00FD90E1 /* Dialog.swift */,
+				883C002F21FB59F1000961F2 /* SubmitDialog.swift */,
+				883C003221FB604A000961F2 /* SubmitDialog.xib */,
+			);
+			path = dialog;
+			sourceTree = "<group>";
+		};
 		884788BE21DB42B900AB138A /* model */ = {
 			isa = PBXGroup;
 			children = (
@@ -149,6 +168,8 @@
 				8893A13821E4F1CB008A775C /* Folder.swift */,
 				8892E3B821EC395700402095 /* BarCode.swift */,
 				88D092C521EE3B9C001D53F6 /* Vaccination.swift */,
+				880BFC6B21FB1A3D006DAE9A /* httpRequest.swift */,
+				883C003621FB7577000961F2 /* user.json */,
 			);
 			path = model;
 			sourceTree = "<group>";
@@ -227,6 +248,7 @@
 		884AC13521CFA55700B894AC /* component */ = {
 			isa = PBXGroup;
 			children = (
+				883C003121FB5AAA000961F2 /* dialog */,
 				884788C121DB6AAF00AB138A /* FormTableViewController.swift */,
 				884AC13121CF97E200B894AC /* CameraView.xib */,
 				884AC13321CF98BF00B894AC /* CameraView.swift */,
@@ -235,8 +257,6 @@
 				884788C521E14A4F00AB138A /* BottomNavigationBar.swift */,
 				8893A13421E35A89008A775C /* TextField.swift */,
 				8892E3BA21EC9DEC00402095 /* SlidingTabBar.swift */,
-				88480EED21ED838800FD90E1 /* Dialog.xib */,
-				88480EEF21ED879A00FD90E1 /* Dialog.swift */,
 				88480EF121ED8C8B00FD90E1 /* UIField.swift */,
 			);
 			path = component;
@@ -347,7 +367,9 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				883C003721FB7577000961F2 /* user.json in Resources */,
 				884AC09B21C6A8F400B894AC /* LaunchScreen.storyboard in Resources */,
+				883C003321FB604A000961F2 /* SubmitDialog.xib in Resources */,
 				884AC09821C6A8F400B894AC /* Assets.xcassets in Resources */,
 				884AC09621C6A8F100B894AC /* Main.storyboard in Resources */,
 				88480EEE21ED838800FD90E1 /* Dialog.xib in Resources */,
@@ -396,6 +418,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				883C003021FB59F1000961F2 /* SubmitDialog.swift in Sources */,
 				8893A13121E2F508008A775C /* SubmittedViewController.swift in Sources */,
 				88D092C621EE3B9C001D53F6 /* Vaccination.swift in Sources */,
 				88480EF221ED8C8B00FD90E1 /* UIField.swift in Sources */,
@@ -417,6 +440,7 @@
 				8892E3BB21EC9DEC00402095 /* SlidingTabBar.swift in Sources */,
 				882E907D21F1B92300893A67 /* BarcodePictureViewContoller.swift in Sources */,
 				884AC12621CD225700B894AC /* CreateModal.swift in Sources */,
+				880BFC6C21FB1A3D006DAE9A /* httpRequest.swift in Sources */,
 				886DA00B21E5FE8100FEC6BE /* FolderFormViewController.swift in Sources */,
 				884AC0BF21C9118000B894AC /* MyTabBarController.swift in Sources */,
 				8893A13921E4F1CB008A775C /* Folder.swift in Sources */,

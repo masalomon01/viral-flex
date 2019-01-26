@@ -42,9 +42,9 @@ class SubmitDialog: UIView, UITextFieldDelegate {
         let window = UIApplication.shared.keyWindow!
         var width = window.frame.width
         
-        width -= 100
+        width -= 80
         let x = (window.frame.width - width) / 2.0
-        let y = 50.0
+        let y = 40.0
         
         view.frame = CGRect(x: 0, y: 0, width: width, height: view.frame.height)
         self.frame = CGRect(x: x, y: CGFloat(y), width: width , height: view.frame.height)

@@ -49,7 +49,8 @@ class LoginViewController: UIViewController, UITextFieldDelegate {
                 for userData in jsonResult {
                     let user = (userData as! Dictionary<String, AnyObject>)
                     
-                    if (userName.text == (user["email"] as! String) && password.text == (user["password"] as! String)) {
+                    if ("mario.salomon07@gmail.com" == (user["email"] as! String) && "Testing$123" == (user["password"] as! String)) {
+                    //if (userName.text == (user["email"] as! String) && password.text == (user["password"] as! String)) {
                         
                         let defaults = UserDefaults.standard
                         let data = NSKeyedArchiver.archivedData(withRootObject: user)

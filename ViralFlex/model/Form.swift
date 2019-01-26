@@ -77,6 +77,8 @@ class Form: NSObject, NSCoding, NSCopying{
         newForm.clinicalSigns = clinicalSigns
         newForm.vaccinations = vaccinations
         
+        newForm.barCodes = barCodes
+        
         return newForm
     }
     

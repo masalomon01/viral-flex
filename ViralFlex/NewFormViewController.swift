@@ -189,8 +189,9 @@ class NewFormViewController: UIViewController, UITabBarDelegate, UITextFieldDele
     }
     
     func onSubmit() {
-        
-        HttpRequest.request(form)
+        var statusCode = "20"
+        statusCode = HttpRequest.request(form)
+        print(statusCode)
         
         self.submit()
         self.dismiss(animated: true, completion: nil)

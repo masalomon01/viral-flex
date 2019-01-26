@@ -1,6 +1,6 @@
 import UIKit
 
-class DraftViewController: UIViewController, FolderSelectDelegate, ItemClickDelegate {
+class DraftViewController: UIViewController, UIGestureRecognizerDelegate, FolderSelectDelegate, ItemClickDelegate, SubmitDialogDelegate {
     
     @IBOutlet weak var checkBox: CheckBox!
     @IBOutlet weak var labelName: UIButton!
@@ -116,7 +116,7 @@ class DraftViewController: UIViewController, FolderSelectDelegate, ItemClickDele
             
         }))
         
-        alertController.addAction(UIAlertAction(title: "View Attachments", style: .default, handler: { (action) -> Void in }))
+        //alertController.addAction(UIAlertAction(title: "View Attachments", style: .default, handler: { (action) -> Void in }))
         
         alertController.addAction(UIAlertAction(title: "Move to Folder", style: .default, handler: { (action) -> Void in
             
@@ -164,16 +164,18 @@ class DraftViewController: UIViewController, FolderSelectDelegate, ItemClickDele
                 self.present(controller, animated: true, completion: nil)
             }
         }))
-        
+        /*
         alertController.addAction(UIAlertAction(title: "Submit", style: .default, handler: { (action) -> Void in
             
             if (form.testType != nil && form.farmName != nil && form.country != nil && form.birdType != nil && form.barCodes.count > 0) {
-                
-                form.submit()
-                self.tableViewController.refresh()
+                let dialog = SubmitDialog()
+                dialog.delegate = self
+                dialog.setup()
+                dialog.show()
+                //self.tableViewController.refresh()
             }
             else {
-                let alert = UIAlertController(title: "Submission Error", message: "Your form has been savedin Drafts. We were unable to Submit it because not all required fields were filled.", preferredStyle: .alert)
+                let alert = UIAlertController(title: "Submission Error", message: "Your form has been saved in Drafts. We were unable to Submit it because not all required fields were filled.", preferredStyle: .alert)
                 alert.addAction(UIAlertAction(title: "Cancel", style: .cancel, handler: nil))
                 alert.addAction(UIAlertAction(title: "Go to Drafts", style: .default, handler: { (action) in
                     
@@ -186,7 +188,7 @@ class DraftViewController: UIViewController, FolderSelectDelegate, ItemClickDele
                 }))
                 self.present(alert, animated: true, completion: nil)
             }
-        }))
+        })) */
         
         alertController.addAction(UIAlertAction(title: "Cancel", style: .cancel, handler: { (action) -> Void in }))
         
@@ -205,22 +207,24 @@ class DraftViewController: UIViewController, FolderSelectDelegate, ItemClickDele
         
         if (unsubmitted != "") {
             
-            let alert = UIAlertController(title: "Submission Error", message: "We are attempting to Submit multiple Draft Forms. However, the following Forms do not have all the required fields completed:" + unsubmitted, preferredStyle: .alert)
-            alert.addAction(UIAlertAction(title: "Cancel", style: .cancel, handler: nil))
-            alert.addAction(UIAlertAction(title: "Next", style: .default, handler: nil))
+            let alert = UIAlertController(title: "Submission Error", message: "You are attempting to Submit Draft Forms. However, the following Forms do not have all the required fields completed:" + unsubmitted, preferredStyle: .alert)
+            alert.addAction(UIAlertAction(title: "Dismiss", style: .cancel, handler: nil))
+            //alert.addAction(UIAlertAction(title: "Next", style: .default, handler: nil))
             self.present(alert, animated: true, completion: nil)
         }
         else {
-            for form in forms {
-                form.submit()
-            }
+            let dialog = SubmitDialog()
+            dialog.delegate = self
+            dialog.setup()
+            dialog.show()
+            //for form in forms {
+            //    form.submit()
+            //}
         }
-        
-        self.tableViewController.refresh()
-        
-        self.checkBox.isSelected = false
-        self.tableViewController.deselectAll()
-        self.toggleSelectionMenu(visible: true)
+        //self.tableViewController.refresh()
+        //self.checkBox.isSelected = false
+        //self.tableViewController.deselectAll()
+        //self.toggleSelectionMenu(visible: true)
     }
     
     @IBAction func onMoveToFolderClick(_ sender: Any) {
@@ -281,6 +285,21 @@ class DraftViewController: UIViewController, FolderSelectDelegate, ItemClickDele
         manageViewController.layoutSelection.isHidden = visible
         parent!.tabBarController?.tabBar.isHidden = !visible
     }
+    
+    
+    func onSubmit() {
+        let forms = tableViewController.getSelectedForms()
+        for form in forms {
+            let statusCode = HttpRequest.request(form)
+            form.submit()
+            //self.dismiss(animated: true, completion: nil)
+        }
+        self.tableViewController.refresh()
+        self.checkBox.isSelected = false
+        self.tableViewController.deselectAll()
+        self.toggleSelectionMenu(visible: true)
+    }
+    
     
     @IBAction func onNavigationSelectAllClick(sender: UITabBarItem) {
         tableViewController.selectAll()

@@ -12,9 +12,7 @@ class SubmitSuccessViewController: UIViewController {
     }
     
     @IBAction func onHomeClick(_ sender: Any) {
-        if let controller = self.storyboard?.instantiateViewController(withIdentifier: "mainViewController") {
-            self.present(controller, animated: true, completion: nil)
-        }
+        dismiss(animated: true, completion: nil)
     }
     
     @IBAction func onNewFormClick(_ sender: Any) {

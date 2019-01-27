@@ -30,6 +30,7 @@ class Form: NSObject, NSCoding, NSCopying{
     var veterinaryPractice: String?
     var veterinarySurgeon: String?
     var inOvoVaccinator: String?
+    var hatcherVaccinator: String?
     var labReferenceNumber: String?
     var companyName: String?
     var postCode: String?
@@ -69,6 +70,7 @@ class Form: NSObject, NSCoding, NSCopying{
         newForm.veterinaryPractice = veterinaryPractice
         newForm.veterinarySurgeon = veterinarySurgeon
         newForm.inOvoVaccinator = inOvoVaccinator
+        newForm.hatcherVaccinator = hatcherVaccinator
         newForm.labReferenceNumber = labReferenceNumber
         newForm.companyName = companyName
         newForm.postCode = postCode
@@ -76,7 +78,6 @@ class Form: NSObject, NSCoding, NSCopying{
         
         newForm.clinicalSigns = clinicalSigns
         newForm.vaccinations = vaccinations
-        newForm.barCodes = barCodes
         
         return newForm
     }
@@ -104,6 +105,7 @@ class Form: NSObject, NSCoding, NSCopying{
         aCoder.encode(veterinaryPractice, forKey: "veterinaryPractice")
         aCoder.encode(veterinarySurgeon, forKey: "veterinarySurgeon")
         aCoder.encode(inOvoVaccinator, forKey: "inOvoVaccinator")
+        aCoder.encode(hatcherVaccinator, forKey: "hatcherVaccinator")
         aCoder.encode(labReferenceNumber, forKey: "labReferenceNumber")
         aCoder.encode(companyName, forKey: "companyName")
         aCoder.encode(postCode, forKey: "postCode")
@@ -137,6 +139,7 @@ class Form: NSObject, NSCoding, NSCopying{
         veterinaryPractice = aDecoder.decodeObject(forKey: "veterinaryPractice") as? String
         veterinarySurgeon = aDecoder.decodeObject(forKey: "veterinarySurgeon") as? String
         inOvoVaccinator = aDecoder.decodeObject(forKey: "inOvoVaccinator") as? String
+        hatcherVaccinator = aDecoder.decodeObject(forKey: "hatcherVaccinator") as? String
         labReferenceNumber = aDecoder.decodeObject(forKey: "labReferenceNumber") as? String
         companyName = aDecoder.decodeObject(forKey: "companyName") as? String
         postCode = aDecoder.decodeObject(forKey: "postCode") as? String

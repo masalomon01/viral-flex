@@ -41,8 +41,7 @@ class CameraViewController: UIViewController, UIImagePickerControllerDelegate, U
         self.view.addSubview(cameraBtn)
         self.view.addSubview(photoBtn)
         
-        print("111111")
-        self.callGetPhoneWithKind(1);print("111222")
+        self.callGetPhoneWithKind(1);
     }
 
     
@@ -57,8 +56,6 @@ class CameraViewController: UIViewController, UIImagePickerControllerDelegate, U
                 picker.allowsEditing = true // 可對照片作編輯
                 picker.delegate = self
                 self.present(picker, animated: true, completion: nil)
-            } else {
-                print("沒有相機鏡頭...") // 用alertView.show
             }
         default:
             // 開啟相簿

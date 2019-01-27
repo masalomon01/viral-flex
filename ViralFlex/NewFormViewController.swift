@@ -56,7 +56,7 @@ class NewFormViewController: UIViewController, UITabBarDelegate, UITextFieldDele
         textField10.text = form.veterinaryPractice
         textField11.text = form.veterinarySurgeon
         textField12.text = form.inOvoVaccinator
-        textField13.text = form.hatcherySource
+        textField13.text = form.hatcherVaccinator
         textField14.text = form.labReferenceNumber
         textField15.text = form.companyName
         textField16.text = form.postCode
@@ -162,6 +162,7 @@ class NewFormViewController: UIViewController, UITabBarDelegate, UITextFieldDele
         dialog.delegate = self
         dialog.setup()
         dialog.show()
+        dialog.formName.text = form.name
     }
     
     @IBAction func onAddToFolderClick(_ sender: Any) {
@@ -188,9 +189,10 @@ class NewFormViewController: UIViewController, UITabBarDelegate, UITextFieldDele
         }
     }
     
-    func onSubmit() {
-        print("attempting request")
-        HttpRequest.request(form, onRequestSuccess: {
+    func onSubmit(dialog: SubmitDialog, pin: Int) {
+        
+        dialog.labelError.isHidden = true
+        HttpRequest.submitForm(form, pin: pin, onRequestSuccess: {
             
             self.submit()
             if let controller = self.storyboard?.instantiateViewController(withIdentifier: "submitSuccessViewController") {
@@ -198,15 +200,21 @@ class NewFormViewController: UIViewController, UITabBarDelegate, UITextFieldDele
                 (controller as! SubmitSuccessViewController).previousViewController = self
                 self.present(controller, animated: true, completion: nil)
             }
-        }, onRequestFailed: {
-            let alert = UIAlertController(title: "Submission Error", message: "We are currently unable to submit your form. Please try again later and be sure to check all of the required fields.", preferredStyle: .alert)
-            alert.addAction(UIAlertAction(title: "Dismiss", style: .cancel, handler: nil))
-            self.present(alert, animated: true, completion: nil)
+        }, onRequestFailed: {response in 
             
-            //let dialog = ErrorDialog()
-            //dialog.setup()
-            //dialog.show()
+            print(response.statusCode)
             
+            DispatchQueue.main.async {
+                
+                if response.statusCode == 401 {
+                    dialog.labelError.isHidden = false
+                }
+                else if response.statusCode == 500 {
+                    let errorDialog = ErrorDialog()
+                    errorDialog.setup()
+                    errorDialog.show()
+                }
+            }
         })
     }
     
@@ -322,7 +330,7 @@ class NewFormViewController: UIViewController, UITabBarDelegate, UITextFieldDele
         form.veterinaryPractice = textField10.text
         form.veterinarySurgeon = textField11.text
         form.inOvoVaccinator = textField12.text
-        form.hatcherySource = textField13.text
+        form.hatcherVaccinator = textField13.text
         form.labReferenceNumber = textField14.text
         form.companyName = textField15.text
         form.postCode = textField16.text
@@ -349,7 +357,6 @@ class NewFormViewController: UIViewController, UITabBarDelegate, UITextFieldDele
     }
     
     func validate() {
-        print(form.barCodes.count > 0)
         if (textField1.text != "" && textField2.text != "" && textField3.text != "" && textfield4.text != "" && form.barCodes.count > 0) {
             buttonSubmit.isEnabled = true
             buttonSubmit.backgroundColor = UIColor(red: 42/255, green: 49/255, blue: 126/255, alpha: 1.0)

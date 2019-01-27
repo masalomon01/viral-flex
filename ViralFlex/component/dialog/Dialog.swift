@@ -57,7 +57,7 @@ class Dialog: UIView, UIPickerViewDelegate, UIPickerViewDataSource {
         super.init(coder: aDecoder)
     }
     
-    func setup(_ dialogType: Int) {print(dialogType)
+    func setup(_ dialogType: Int) {
         self.dialogType = dialogType
         let index = dialogType == 0 ? dialogType:(dialogType - 1)
         

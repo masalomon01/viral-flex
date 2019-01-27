@@ -12,6 +12,9 @@
 		883C003021FB59F1000961F2 /* SubmitDialog.swift in Sources */ = {isa = PBXBuildFile; fileRef = 883C002F21FB59F1000961F2 /* SubmitDialog.swift */; };
 		883C003321FB604A000961F2 /* SubmitDialog.xib in Resources */ = {isa = PBXBuildFile; fileRef = 883C003221FB604A000961F2 /* SubmitDialog.xib */; };
 		883C003721FB7577000961F2 /* user.json in Resources */ = {isa = PBXBuildFile; fileRef = 883C003621FB7577000961F2 /* user.json */; };
+		883C003921FD23C2000961F2 /* SubmitSuccessViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 883C003821FD23C2000961F2 /* SubmitSuccessViewController.swift */; };
+		883C003B21FD3394000961F2 /* ErrorDialog.swift in Sources */ = {isa = PBXBuildFile; fileRef = 883C003A21FD3394000961F2 /* ErrorDialog.swift */; };
+		883C003F21FD3834000961F2 /* ErrorDialog.xib in Resources */ = {isa = PBXBuildFile; fileRef = 883C003E21FD3834000961F2 /* ErrorDialog.xib */; };
 		884788C021DB46EA00AB138A /* Form.swift in Sources */ = {isa = PBXBuildFile; fileRef = 884788BF21DB46EA00AB138A /* Form.swift */; };
 		884788C221DB6AAF00AB138A /* FormTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 884788C121DB6AAF00AB138A /* FormTableViewController.swift */; };
 		884788C421E137D200AB138A /* CheckBox.swift in Sources */ = {isa = PBXBuildFile; fileRef = 884788C321E137D200AB138A /* CheckBox.swift */; };
@@ -76,6 +79,9 @@
 		883C002F21FB59F1000961F2 /* SubmitDialog.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SubmitDialog.swift; sourceTree = "<group>"; };
 		883C003221FB604A000961F2 /* SubmitDialog.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = SubmitDialog.xib; sourceTree = "<group>"; };
 		883C003621FB7577000961F2 /* user.json */ = {isa = PBXFileReference; lastKnownFileType = text.json; path = user.json; sourceTree = "<group>"; };
+		883C003821FD23C2000961F2 /* SubmitSuccessViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SubmitSuccessViewController.swift; sourceTree = "<group>"; };
+		883C003A21FD3394000961F2 /* ErrorDialog.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ErrorDialog.swift; sourceTree = "<group>"; };
+		883C003E21FD3834000961F2 /* ErrorDialog.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = ErrorDialog.xib; sourceTree = "<group>"; };
 		884788BF21DB46EA00AB138A /* Form.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Form.swift; sourceTree = "<group>"; };
 		884788C121DB6AAF00AB138A /* FormTableViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FormTableViewController.swift; sourceTree = "<group>"; };
 		884788C321E137D200AB138A /* CheckBox.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CheckBox.swift; sourceTree = "<group>"; };
@@ -157,6 +163,8 @@
 				88480EEF21ED879A00FD90E1 /* Dialog.swift */,
 				883C002F21FB59F1000961F2 /* SubmitDialog.swift */,
 				883C003221FB604A000961F2 /* SubmitDialog.xib */,
+				883C003A21FD3394000961F2 /* ErrorDialog.swift */,
+				883C003E21FD3834000961F2 /* ErrorDialog.xib */,
 			);
 			path = dialog;
 			sourceTree = "<group>";
@@ -210,6 +218,7 @@
 				8893A13621E4F14D008A775C /* FolderViewController.swift */,
 				886DA00A21E5FE8100FEC6BE /* FolderFormViewController.swift */,
 				884AC0C321C9204E00B894AC /* NewFormViewController.swift */,
+				883C003821FD23C2000961F2 /* SubmitSuccessViewController.swift */,
 				8893A13A21E59E7D008A775C /* AddToFolderViewController.swift */,
 				886DA00821E5DF6300FEC6BE /* CheckListViewController.swift */,
 				884AC12121CC6BF800B894AC /* ScanViewController.swift */,
@@ -369,6 +378,7 @@
 			files = (
 				883C003721FB7577000961F2 /* user.json in Resources */,
 				884AC09B21C6A8F400B894AC /* LaunchScreen.storyboard in Resources */,
+				883C003F21FD3834000961F2 /* ErrorDialog.xib in Resources */,
 				883C003321FB604A000961F2 /* SubmitDialog.xib in Resources */,
 				884AC09821C6A8F400B894AC /* Assets.xcassets in Resources */,
 				884AC09621C6A8F100B894AC /* Main.storyboard in Resources */,
@@ -431,11 +441,13 @@
 				88480EF021ED879A00FD90E1 /* Dialog.swift in Sources */,
 				8893A13321E35449008A775C /* LoginViewController.swift in Sources */,
 				884788C221DB6AAF00AB138A /* FormTableViewController.swift in Sources */,
+				883C003B21FD3394000961F2 /* ErrorDialog.swift in Sources */,
 				884AC12221CC6BF800B894AC /* ScanViewController.swift in Sources */,
 				8893A12F21E27742008A775C /* DraftViewController.swift in Sources */,
 				884AC09321C6A8F100B894AC /* ManageViewController.swift in Sources */,
 				884AC08F21C6A8F100B894AC /* AppDelegate.swift in Sources */,
 				884788C621E14A4F00AB138A /* BottomNavigationBar.swift in Sources */,
+				883C003921FD23C2000961F2 /* SubmitSuccessViewController.swift in Sources */,
 				884788C021DB46EA00AB138A /* Form.swift in Sources */,
 				8892E3BB21EC9DEC00402095 /* SlidingTabBar.swift in Sources */,
 				882E907D21F1B92300893A67 /* BarcodePictureViewContoller.swift in Sources */,
@@ -625,8 +637,8 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
-				CODE_SIGN_IDENTITY = "iPhone Distribution";
-				CODE_SIGN_STYLE = Manual;
+				CODE_SIGN_IDENTITY = "iPhone Developer";
+				CODE_SIGN_STYLE = Automatic;
 				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
 				DEVELOPMENT_TEAM = 2KD428X6J3;
 				FRAMEWORK_SEARCH_PATHS = (
@@ -641,7 +653,7 @@
 				);
 				PRODUCT_BUNDLE_IDENTIFIER = com.genomics.ViralFlex.test;
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				PROVISIONING_PROFILE_SPECIFIER = Alpha;
+				PROVISIONING_PROFILE_SPECIFIER = "";
 				SWIFT_VERSION = 4.2;
 				TARGETED_DEVICE_FAMILY = "1,2";
 			};
@@ -651,8 +663,8 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
-				CODE_SIGN_IDENTITY = "iPhone Distribution";
-				CODE_SIGN_STYLE = Manual;
+				CODE_SIGN_IDENTITY = "iPhone Developer";
+				CODE_SIGN_STYLE = Automatic;
 				DEVELOPMENT_TEAM = 2KD428X6J3;
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
@@ -666,7 +678,7 @@
 				);
 				PRODUCT_BUNDLE_IDENTIFIER = com.genomics.ViralFlex.test;
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				PROVISIONING_PROFILE_SPECIFIER = Alpha;
+				PROVISIONING_PROFILE_SPECIFIER = "";
 				SWIFT_VERSION = 4.2;
 				TARGETED_DEVICE_FAMILY = "1,2";
 			};

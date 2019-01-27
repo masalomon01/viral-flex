@@ -3,7 +3,7 @@ import Foundation
 
 class HttpRequest {
     
-    static func request(_ form: Form) {
+    static func request(_ form: Form, onRequestSuccess: @escaping ()->(), onRequestFailed: @escaping ()->()) {
         
         let token = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJfaWQiOiI1YzRiMzFmOTcwMjAyYzdhNTVmZDgxYzEiLCJmaXJzdE5hbWUiOiJNYXJpbyIsImxhc3ROYW1lIjoiU2Fsb21vbiIsImVtYWlsIjoibWFyaW8uc2Fsb21vbjA3QGdtYWlsLmNvbSIsInBpbiI6MTIzNCwiaWF0IjoxNTQ4NDMyMzc1fQ.U9dU36ZFkD0Ua3w4c9mK05R9m-YFoISeMswagh-0m4A"
         
@@ -58,9 +58,11 @@ class HttpRequest {
             _ = URLSession.shared.dataTask(with: urlRequest) { (data, response, error) in
                 if error != nil{
                     print(error.debugDescription)
+                    onRequestSuccess()
                 }else{
                     let str = String(data: data!, encoding: String.Encoding.utf8)
                     print(str)
+                    onRequestFailed()
                 }
                 }.resume()
             //

@@ -190,10 +190,21 @@ class NewFormViewController: UIViewController, UITabBarDelegate, UITextFieldDele
     
     func onSubmit() {
         
-        HttpRequest.request(form)
-        
-        self.submit()
-        self.dismiss(animated: true, completion: nil)
+        HttpRequest.request(form, onRequestSuccess: {
+            
+            self.submit()
+            if let controller = self.storyboard?.instantiateViewController(withIdentifier: "submitSuccessViewController") {
+                
+                (controller as! SubmitSuccessViewController).previousViewController = self
+                self.present(controller, animated: true, completion: nil)
+            }
+        }, onRequestFailed: {
+            
+            let dialog = ErrorDialog()
+            dialog.setup()
+            dialog.show()
+            
+        })
     }
     
     @IBAction func onClearClick(_ sender: Any) {
@@ -274,8 +285,7 @@ class NewFormViewController: UIViewController, UITabBarDelegate, UITextFieldDele
         
         if UIImagePickerController.isSourceTypeAvailable(UIImagePickerController.SourceType.camera) {
             picker.sourceType = UIImagePickerController.SourceType.camera
-            picker.allowsEditing = true // 可對照片作編輯
-            //                picker.showsCameraControls = false
+            picker.allowsEditing = true
             
             let myView = Bundle.main.loadNibNamed("CameraView", owner: nil, options: nil)?.first as? CameraView
 

@@ -12,9 +12,13 @@ class BarCode: NSObject, NSCoding {
     
     func encode(with aCoder: NSCoder) {
         
+        aCoder.encode(code, forKey: "code")
+        aCoder.encode(time, forKey: "time")
     }
     
     required init?(coder aDecoder: NSCoder) {
         
+        code = aDecoder.decodeObject(forKey: "code") as! String
+        time = aDecoder.decodeObject(forKey: "time") as? Date
     }
 }

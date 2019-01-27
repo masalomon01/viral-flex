@@ -195,6 +195,7 @@ class NewFormViewController: UIViewController, UITabBarDelegate, UITextFieldDele
         HttpRequest.submitForm(form, pin: pin, onRequestSuccess: {
             
             self.submit()
+            dialog.hide()
             if let controller = self.storyboard?.instantiateViewController(withIdentifier: "submitSuccessViewController") {
                 
                 (controller as! SubmitSuccessViewController).previousViewController = self

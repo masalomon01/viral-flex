@@ -51,7 +51,7 @@ class HttpRequest {
         let defaults = UserDefaults.standard
         let token = defaults.object(forKey: "token") as! String
         
-        if let url = URL(string: "https://client.rgportal.com/api/app-forms") {
+        if let url = URL(string: baseUrl + "/app-forms") {
             
             var urlRequest = URLRequest(url: url)
             urlRequest.httpMethod = "POST"
@@ -110,18 +110,20 @@ class HttpRequest {
                 
                 urlRequest.httpBody = serializedData
             } catch {
+                print("error")
                 return
             }
             
             URLSession.shared.dataTask(with: urlRequest) { (data, response, error) in
                 if error != nil{
                     print(error.debugDescription)
+                    print(22222)
                 }else{
                     
-                    if (response as! HTTPURLResponse).statusCode == 200 {
+                    if (response as! HTTPURLResponse).statusCode == 200 {print(11111)
                         onRequestSuccess()
                     }
-                    else {
+                    else {print(11112)
                         let str = String(data: data!, encoding: String.Encoding.utf8)
                         print(str)
                         onRequestFailed(response as! HTTPURLResponse)

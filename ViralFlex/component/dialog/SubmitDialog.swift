@@ -15,6 +15,8 @@ class SubmitDialog: UIView, UITextFieldDelegate {
     var dim: UIView!
     var delegate: SubmitDialogDelegate?
     
+    var x: CGFloat!
+    var y: CGFloat!
     
     override init(frame: CGRect) {
         super.init(frame: frame)
@@ -36,8 +38,8 @@ class SubmitDialog: UIView, UITextFieldDelegate {
         var width = window.frame.width
         
         width -= 100
-        let x = (window.frame.width - width) / 2.0
-        let y = 50.0
+        x = (window.frame.width - width) / 2.0
+        y = 50.0
         
         view.frame = CGRect(x: 0, y: 0, width: width, height: view.frame.height)
         self.frame = CGRect(x: x, y: CGFloat(y), width: width , height: view.frame.height)
@@ -75,10 +77,10 @@ class SubmitDialog: UIView, UITextFieldDelegate {
     
     @IBAction func onDoneClick(_ sender: Any) {
         
-        let defaults = UserDefaults.standard
-        let data = defaults.object(forKey: "user")
-        if data != nil {
-            let user = NSKeyedUnarchiver.unarchiveObject(with: data as! Data) as! Dictionary<String, AnyObject>
+//        let defaults = UserDefaults.standard
+//        let data = defaults.object(forKey: "user")
+//        if data != nil {
+//            let user = NSKeyedUnarchiver.unarchiveObject(with: data as! Data) as! Dictionary<String, AnyObject>
             
             let pin = pin1.text! + pin2.text! + pin3.text! + pin4!.text!
 //            if (pin == String(user["pin"] as! Int)) {
@@ -86,7 +88,7 @@ class SubmitDialog: UIView, UITextFieldDelegate {
             delegate?.onSubmit(dialog: self, pin: Int(pin)!)
 //                hide()
 //            }
-        }
+//        }
     }
     
     @IBAction func onCancelClick(_ sender: Any) {

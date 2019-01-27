@@ -189,7 +189,7 @@ class NewFormViewController: UIViewController, UITabBarDelegate, UITextFieldDele
     }
     
     func onSubmit() {
-        
+        print("attempting request")
         HttpRequest.request(form, onRequestSuccess: {
             
             self.submit()
@@ -199,10 +199,13 @@ class NewFormViewController: UIViewController, UITabBarDelegate, UITextFieldDele
                 self.present(controller, animated: true, completion: nil)
             }
         }, onRequestFailed: {
+            let alert = UIAlertController(title: "Submission Error", message: "We are currently unable to submit your form. Please try again later and be sure to check all of the required fields.", preferredStyle: .alert)
+            alert.addAction(UIAlertAction(title: "Dismiss", style: .cancel, handler: nil))
+            self.present(alert, animated: true, completion: nil)
             
-            let dialog = ErrorDialog()
-            dialog.setup()
-            dialog.show()
+            //let dialog = ErrorDialog()
+            //dialog.setup()
+            //dialog.show()
             
         })
     }

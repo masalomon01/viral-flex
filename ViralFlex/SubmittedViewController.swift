@@ -32,14 +32,14 @@ class SubmittedViewController: UIViewController, FolderSelectDelegate {
         
         alertController.addAction(UIAlertAction(title: "Make a Copy", style: .default, handler: { (action) -> Void in
             
-            let alertController = UIAlertController(title: "Name Your Form", message: "Give a uniqu, pertinent name to your form. This can be chaned later.", preferredStyle: .alert)
+            let alertController = UIAlertController(title: "Name Your Form", message: "Give a unique, pertinent name to your form. This can be chaned later.", preferredStyle: .alert)
             
             alertController.addTextField { (textField) in
                 textField.text = form.name
                 //                textField.addTarget(self, action: #selector(self.textFieldEditingDidChange(_:)), for: .editingChanged)
             }
             
-            alertController.addAction(UIAlertAction(title: "View Form", style: .default, handler: { (action) -> Void in }))
+            //alertController.addAction(UIAlertAction(title: "View Form", style: .default, handler: { (action) -> Void in }))
             
             alertController.addAction(UIAlertAction(title: "Create", style: .default) { (action) in
                 

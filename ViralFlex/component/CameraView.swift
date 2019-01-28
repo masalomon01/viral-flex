@@ -24,11 +24,10 @@ class CameraView: UIView, UIImagePickerControllerDelegate, UINavigationControlle
         let fileManager = FileManager.default
         let docUrls = fileManager.urls(for: .documentDirectory, in: .userDomainMask)
         let docUrl = docUrls.first
-        //檔名
+
         let interval = Date.timeIntervalSinceReferenceDate
         let name = "\(interval).jpg"
         let url = docUrl?.appendingPathComponent(name)
-        //把圖片存在APP裡
         let data = image.jpegData(compressionQuality: 0.9)
         try! data?.write(to: url!)
         
@@ -68,7 +67,7 @@ class CameraView: UIView, UIImagePickerControllerDelegate, UINavigationControlle
         
         if UIImagePickerController.isSourceTypeAvailable(UIImagePickerController.SourceType.camera) {
             picker.sourceType = UIImagePickerController.SourceType.photoLibrary
-//            picker.allowsEditing = true // 可對照片作編輯
+//            picker.allowsEditing = true
             //                picker.showsCameraControls = false
             
 //            let myView = Bundle.main.loadNibNamed("CameraView", owner: nil, options: nil)?.first as? CameraView

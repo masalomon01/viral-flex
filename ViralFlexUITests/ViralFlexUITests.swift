@@ -2,8 +2,6 @@
 //  ViralFlexUITests.swift
 //  ViralFlexUITests
 //
-//  Created by 曾煜智 on 2018/12/16.
-//  Copyright © 2018年 曾煜智. All rights reserved.
 //
 
 import XCTest

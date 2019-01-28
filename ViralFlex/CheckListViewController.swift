@@ -135,12 +135,13 @@ class CheckListViewController: UIViewController, UITableViewDataSource, UITableV
     }
     
     @IBAction func onBackClick(_ sender: Any) {
-        dismiss(animated: true, completion: nil)
+        self.dismiss(animated: true, completion: nil)
     }
     
     @IBAction func onDoneClick(_ sender: Any) {
         checkListSelectDelegate?.onCheckListSelect(selectedResult)
-        dismiss(animated: true, completion: nil)
+        //dismiss(animated: true, completion: nil)
+        self.dismiss(animated: true, completion: nil)
     }
     
     @IBAction func onCelClick(_ sender: UIGestureRecognizer) {

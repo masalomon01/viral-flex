@@ -92,11 +92,13 @@ class NewFormViewController: UIViewController, UITabBarDelegate, UITextFieldDele
             (segue.destination as! CheckListViewController).selectedResult = form.clinicalSigns
         }
         else {
-            (segue.destination as! CheckListViewController).section = ["Innovax", "IBD", "Other Vaccinations"]
+            (segue.destination as! CheckListViewController).section = ["Innovax", "IBD", "ILT", "ND", "Other Vaccinations"]
             (segue.destination as! CheckListViewController).row = [
                 [Vaccination("Innovax\nILT"), Vaccination("Innovax\nILT-SB"), Vaccination("Innovax\nND"), Vaccination("Innovax\nND-IBD"), Vaccination("Innovax\nND-SB")],
                 [Vaccination("Nobilis\n228E"), Vaccination("Nobilis/\nClonevac D78"), Vaccination("Univax-BD"), Vaccination("Univax-Plus"), Vaccination("89/03"), Vaccination("Bursaplex"), Vaccination("Bursa-Vac"), Vaccination("Bursine 2"), Vaccination("Bursine Plus"), Vaccination("S706"), Vaccination("SVS510"), Vaccination("Transmune\n2512")],
-                [Vaccination("add")]
+                [Vaccination("LT-Ivax"), Vaccination("Nobilis\nILT"), Vaccination("Trachivax"), Vaccination("Other ILT")],
+                [Vaccination("Newhatch-C2")],
+                [Vaccination("2177"), Vaccination("Mildvac\nArk"), Vaccination("Mildvac\nGA-98"), Vaccination("Mildvac\nMass-Ark"), Vaccination("Mildvac\nMass+Conn"), Vaccination("Newhatch\nC2-M"), Vaccination("Newhatch\nC2-MC"), Vaccination("Nobilis\nIB 4-91"), Vaccination("Nobilis\nIB H120"), Vaccination("Nobilis\nIB Ma5"), Vaccination("Nobilis\nIB Rhino CV"), Vaccination("Nobilis\nTRT Live"), Vaccination("Monovalent\nHVT"), Vaccination("Ris-ma"), Vaccination("Rismavac"), Vaccination("Shor-Bron-D"), Vaccination("Injectible Antibiotic"), Vaccination("1/96"), Vaccination("Ark"), Vaccination("CR88"), Vaccination("H120 + D274\n(IB Primer)"), Vaccination("Ibmm plus\nArk"), Vaccination("Other\nCVI/Rispens"), Vaccination("SB1"), Vaccination("add")]
             ]
             (segue.destination as! CheckListViewController).checkListSelectDelegate = self
             (segue.destination as! CheckListViewController).navigationTitleString = "Vaccination Treatments"
@@ -192,7 +194,6 @@ class NewFormViewController: UIViewController, UITabBarDelegate, UITextFieldDele
     func onSubmit(dialog: SubmitDialog, pin: Int) {
         
         self.getData()
-        self.saveDraft()
         dialog.labelError.isHidden = true
         HttpRequest.submitForm(form, pin: pin, onRequestSuccess: {response in
             

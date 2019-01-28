@@ -1,6 +1,6 @@
 import UIKit
 
-class DraftViewController: UIViewController, FolderSelectDelegate, ItemClickDelegate {
+class DraftViewController: UIViewController, FolderSelectDelegate, ItemClickDelegate, SubmitDialogDelegate {
     
     @IBOutlet weak var checkBox: CheckBox!
     @IBOutlet weak var labelName: UIButton!
@@ -116,7 +116,7 @@ class DraftViewController: UIViewController, FolderSelectDelegate, ItemClickDele
             
         }))
         
-        alertController.addAction(UIAlertAction(title: "View Attachments", style: .default, handler: { (action) -> Void in }))
+        //alertController.addAction(UIAlertAction(title: "View Attachments", style: .default, handler: { (action) -> Void in }))
         
         alertController.addAction(UIAlertAction(title: "Move to Folder", style: .default, handler: { (action) -> Void in
             
@@ -164,7 +164,7 @@ class DraftViewController: UIViewController, FolderSelectDelegate, ItemClickDele
                 self.present(controller, animated: true, completion: nil)
             }
         }))
-        
+        /*
         alertController.addAction(UIAlertAction(title: "Submit", style: .default, handler: { (action) -> Void in
             
             if (form.testType != nil && form.farmName != nil && form.country != nil && form.birdType != nil && form.barCodes.count > 0) {
@@ -186,7 +186,7 @@ class DraftViewController: UIViewController, FolderSelectDelegate, ItemClickDele
                 }))
                 self.present(alert, animated: true, completion: nil)
             }
-        }))
+        })) */
         
         alertController.addAction(UIAlertAction(title: "Cancel", style: .cancel, handler: { (action) -> Void in }))
         
@@ -205,22 +205,26 @@ class DraftViewController: UIViewController, FolderSelectDelegate, ItemClickDele
         
         if (unsubmitted != "") {
             
-            let alert = UIAlertController(title: "Submission Error", message: "We are attempting to Submit multiple Draft Forms. However, the following Forms do not have all the required fields completed:" + unsubmitted, preferredStyle: .alert)
-            alert.addAction(UIAlertAction(title: "Cancel", style: .cancel, handler: nil))
-            alert.addAction(UIAlertAction(title: "Next", style: .default, handler: nil))
+            let alert = UIAlertController(title: "Submission Error", message: "You are attempting to Submit multiple Draft Forms. However, the following Forms do not have all the required fields completed:" + unsubmitted, preferredStyle: .alert)
+            alert.addAction(UIAlertAction(title: "Dismiss", style: .cancel, handler: nil))
+            //alert.addAction(UIAlertAction(title: "Next", style: .default, handler: nil))
             self.present(alert, animated: true, completion: nil)
         }
         else {
+            var formNames: String = ""
             for form in forms {
-                form.submit()
+                if formNames.isEmpty {
+                    formNames = form.name
+                } else {
+                    formNames += ", \(form.name)"
+                }
             }
+            let dialog = SubmitDialog()
+            dialog.delegate = self
+            dialog.setup()
+            dialog.show()
+            dialog.formName.text = formNames
         }
-        
-        self.tableViewController.refresh()
-        
-        self.checkBox.isSelected = false
-        self.tableViewController.deselectAll()
-        self.toggleSelectionMenu(visible: true)
     }
     
     @IBAction func onMoveToFolderClick(_ sender: Any) {
@@ -281,6 +285,56 @@ class DraftViewController: UIViewController, FolderSelectDelegate, ItemClickDele
         manageViewController.layoutSelection.isHidden = visible
         parent!.tabBarController?.tabBar.isHidden = !visible
     }
+    
+    
+    func onSubmit(dialog: SubmitDialog, pin: Int) {
+        let forms = tableViewController.getSelectedForms()
+        var status: Int = 0
+        dialog.labelError.isHidden = true
+        let myGroup = DispatchGroup()
+        for form in forms {
+            myGroup.enter()
+            HttpRequest.submitForm(form, pin: pin, onRequestSuccess: {response in
+                print(response.statusCode)
+                status = response.statusCode
+                form.submit()
+                myGroup.leave()
+            }, onRequestFailed: {response in
+                print(response.statusCode)
+                status = response.statusCode
+                myGroup.leave()
+            })
+        }
+        myGroup.notify(queue: .main) {
+            print("Finished all requests.")
+            if status == 200{
+                if let controller = self.storyboard?.instantiateViewController(withIdentifier: "submitSuccessViewController") {
+                    (controller as! SubmitSuccessViewController).previousViewController = self
+                    self.present(controller, animated: true, completion: nil)
+                }
+            }
+            else {
+                if status == 401 {
+                    dialog.labelError.isHidden = false
+                }
+                else if status == 500 {
+                    let errorDialog = ErrorDialog()
+                    errorDialog.setup()
+                    errorDialog.show()
+                }
+                else{
+                    print("I'm here with no status")
+                }
+            }
+            self.tableViewController.refresh()
+            self.checkBox.isSelected = false
+            self.tableViewController.deselectAll()
+            self.toggleSelectionMenu(visible: true)
+        }
+        
+    }
+    
+    
     
     @IBAction func onNavigationSelectAllClick(sender: UITabBarItem) {
         tableViewController.selectAll()

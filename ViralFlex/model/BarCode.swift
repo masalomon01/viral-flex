@@ -10,6 +10,7 @@ class BarCode: NSObject, NSCoding {
         self.time = time
     }
     
+    
     func encode(with aCoder: NSCoder) {
         
         aCoder.encode(code, forKey: "code")
@@ -17,8 +18,8 @@ class BarCode: NSObject, NSCoding {
     }
     
     required init?(coder aDecoder: NSCoder) {
-        
-        code = aDecoder.decodeObject(forKey: "code") as! String
+        //code = aDecoder.decodeObject(forKey: "code") as! String
+        code = "0987654321"
         time = aDecoder.decodeObject(forKey: "time") as? Date
     }
 }

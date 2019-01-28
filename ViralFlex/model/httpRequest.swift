@@ -1,11 +1,11 @@
 import Foundation
-
+import UIKit
 
 class HttpRequest {
     
     static let baseUrl = "https://client.rgportal.com/api"
     
-    static func signin(email: String, password: String, onRequestSuccess: @escaping (_ token: String)->(), onRequestFailed: @escaping (_ response: HTTPURLResponse, _ message: String)->()) {
+    static func signin(email: String, password: String, onRequestSuccess: @escaping (_ token: String, _ response: HTTPURLResponse)->(), onRequestFailed: @escaping (_ response: HTTPURLResponse, _ message: String)->()) {
         
         if let url = URL(string: baseUrl + "/users/auth/app-signin") {
             
@@ -35,7 +35,7 @@ class HttpRequest {
                     let parsedData = try? JSONSerialization.jsonObject(with: data!) as! [String:Any]
                     
                     if parsedData != nil && parsedData!["token"] != nil {
-                        onRequestSuccess(parsedData!["token"] as! String)
+                        onRequestSuccess(parsedData!["token"] as! String, response as! HTTPURLResponse)
                     }
                     else {
                         print(parsedData)
@@ -46,7 +46,7 @@ class HttpRequest {
         }
     }
     
-    static func submitForm(_ form: Form, pin: Int, onRequestSuccess: @escaping ()->(), onRequestFailed: @escaping (_ response: HTTPURLResponse)->()) {
+    static func submitForm(_ form: Form, pin: Int, onRequestSuccess: @escaping (_ response: HTTPURLResponse)->(), onRequestFailed: @escaping (_ response: HTTPURLResponse)->()) {
         
         let defaults = UserDefaults.standard
         let token = defaults.object(forKey: "token") as! String
@@ -73,30 +73,46 @@ class HttpRequest {
                     ])
             }
             
+            print(form.pictures)
+            
+            var TestTypeMap: [String : String] = [
+                "Innovax ILT Vaccine Test": "Innovax ILT",
+                "Innovax ND Vaccine Test": "Innovax ND",
+                "Innovax ND-IBD Vaccine Test": "Innovax ND IBD",
+                "ILT Field Virus Test": "ILT field virus",
+                "IBD Field Virus Test": "IBD field virus"]
+            var actualTestType = String(form.testType!)
+            
             let data: [String: Any] = [
                 "pin": pin,
                 "forms": [
                     [
                         "formName": form.name,
-                        "testType": form.birdType,
+                        "testType": TestTypeMap[actualTestType],
                         "farmName": form.farmName,
                         "country": form.country,
                         "barcodes": barcodes,
                         "samplingAge": form.samplingAge,
+                        "sampleType": form.sampleType,
                         "birdBreed": form.birdType,
                         "hatcherySource": form.hatcherySource,
-                        "clinicalSigns": form.clinicalSigns,
+                        "longitude": 23.67889,
+                        "latitude": 56.9888,
+                        "symptoms": form.clinicalSigns,
+                        "symptomNotes": "This is an example symptom note.",
                         "vetPractice": form.veterinaryPractice,
                         "vetSurgeon": form.veterinarySurgeon,
                         "savedDate": form.createTime?.timeIntervalSince1970,
-                        "sentDate": form.submitTime?.timeIntervalSince1970,
+                        "sentDate": Date().timeIntervalSince1970,
                         "zipPostCountry": form.postCode,
                         "labRefNo": form.labReferenceNumber,
-                        "sampleType": form.sampleType,
                         "shedId": form.shedID,
                         "vaccinations": vaccinations,
                         "hatcherVaccinator": form.hatcherVaccinator,
-                        "inOvoVaccinator": form.inOvoVaccinator
+                        "inOvoVaccinator": form.inOvoVaccinator,
+                        "companyName": form.companyName,
+                        "sampleCode": form.sampleCode
+                        
                     ]
                 ]
             ]
@@ -119,12 +135,18 @@ class HttpRequest {
                     print(error.debugDescription)
                     print(22222)
                 }else{
-                    
+                    let str = String(data: data!, encoding: String.Encoding.utf8)
                     if (response as! HTTPURLResponse).statusCode == 200 {print(11111)
-                        onRequestSuccess()
+                        print(str)
+                        if form.pictures != [] {
+                            //submitPictures(pictures: form.pictures, token: token, farm: form.farmName ?? "farm", form: form.name)
+                            onRequestSuccess(response as! HTTPURLResponse)
+                        }
+                        else{
+                            onRequestSuccess(response as! HTTPURLResponse)
+                        }
                     }
                     else {print(11112)
-                        let str = String(data: data!, encoding: String.Encoding.utf8)
                         print(str)
                         onRequestFailed(response as! HTTPURLResponse)
                     }
@@ -136,8 +158,23 @@ class HttpRequest {
         
     }
     
-    static func submitPictures() {
+    static func submitPictures(pictures: [String], token: String, farm: String, form: String) {
+        
+        if let url = URL(string: baseUrl + "/app-forms/images") {
+            
+            var urlRequest = URLRequest(url: url)
+            urlRequest.httpMethod = "POST"
+            urlRequest.setValue(token, forHTTPHeaderField: "Authorization")
+            urlRequest.setValue("application/json", forHTTPHeaderField: "Content-Type")
+            
+            let bodyData = "formName=" + form + "&farmName=" + farm
+            print(bodyData)
+            urlRequest.httpBody = bodyData.data(using: String.Encoding.utf8)
+            
+            let img = UIImage(contentsOfFile: pictures[0])
+
         
         
+        }
     }
 }

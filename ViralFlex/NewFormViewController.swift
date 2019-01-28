@@ -191,8 +191,12 @@ class NewFormViewController: UIViewController, UITabBarDelegate, UITextFieldDele
     
     func onSubmit(dialog: SubmitDialog, pin: Int) {
         
+        self.getData()
+        self.saveDraft()
         dialog.labelError.isHidden = true
-        HttpRequest.submitForm(form, pin: pin, onRequestSuccess: {
+        HttpRequest.submitForm(form, pin: pin, onRequestSuccess: {response in
+            
+            print(response.statusCode)
             
             self.submit()
             dialog.hide()

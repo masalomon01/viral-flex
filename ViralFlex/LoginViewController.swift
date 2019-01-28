@@ -61,8 +61,9 @@ class LoginViewController: UIViewController, UITextFieldDelegate {
 //
 //                    if (userName.text == (user["email"] as! String) && password.text == (user["password"] as! String)) {
                 
-                        HttpRequest.signin(email: userName.text!, password: password.text!, onRequestSuccess: { token in
-
+                        HttpRequest.signin(email: userName.text!, password: password.text!, onRequestSuccess: { token, response in
+                            
+                            print(response.statusCode)
                             let defaults = UserDefaults.standard
                             defaults.set(token, forKey: "token")
                             defaults.synchronize()

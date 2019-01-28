@@ -78,6 +78,8 @@ class Form: NSObject, NSCoding, NSCopying{
         
         newForm.clinicalSigns = clinicalSigns
         newForm.vaccinations = vaccinations
+        //newForm.barCodes = barCodes
+        //newForm.pictures = pictures
         
         return newForm
     }

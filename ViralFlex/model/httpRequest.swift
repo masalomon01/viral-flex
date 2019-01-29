@@ -73,8 +73,6 @@ class HttpRequest {
                     ])
             }
             
-            print(form.pictures)
-            
             var TestTypeMap: [String : String] = [
                 "Innovax ILT Vaccine Test": "Innovax ILT",
                 "Innovax ND Vaccine Test": "Innovax ND",
@@ -129,7 +127,12 @@ class HttpRequest {
                 print("error")
                 return
             }
-            
+            if form.pictures.count >= 5 {
+                print("too many pictures, max allowed is 4")
+                if let urlFake = URL(string: baseUrl + "/fake/to/fail"){
+                    urlRequest = URLRequest(url: urlFake)
+                }
+            }
             URLSession.shared.dataTask(with: urlRequest) { (data, response, error) in
                 if error != nil{
                     print(error.debugDescription)
@@ -139,7 +142,7 @@ class HttpRequest {
                     if (response as! HTTPURLResponse).statusCode == 200 {print(11111)
                         print(str)
                         if form.pictures != [] {
-                            //submitPictures(pictures: form.pictures, token: token, farm: form.farmName ?? "farm", form: form.name)
+                            submitPictures(pictures: form.pictures, token: token, farm: form.farmName ?? "farm", form: form.name)
                             onRequestSuccess(response as! HTTPURLResponse)
                         }
                         else{
@@ -158,23 +161,72 @@ class HttpRequest {
         
     }
     
-    static func submitPictures(pictures: [String], token: String, farm: String, form: String) {
-        
-        if let url = URL(string: baseUrl + "/app-forms/images") {
+    static func createRequestBodyWith(imagePaths:[String]) -> Data{
+        var bodyData = Data()
+        let boundary: String
+        boundary = "Boundary-\(NSUUID().uuidString)"
+    
+        for each in imagePaths {
+            let url = URL(fileURLWithPath: each)
+            let filename = url.lastPathComponent
+            let splitName = filename.split(separator: ".")
+            let name = String(describing: splitName.first)
+            let filetype = String(describing: splitName.last)
             
+            let imgBoundary = "\r\n--\(boundary)\r\nContent-Type: image/\(filetype)\r\nContent-Disposition: form-data; filename=\(filename); name=\(name)\r\n\r\n"
+            
+            if let d = imgBoundary.data(using: .utf8) {
+                bodyData.append(d)
+            }
+            
+            do {
+                let imgData = try Data(contentsOf:url, options:[])
+                bodyData.append(imgData)
+            }
+            catch {
+                print("can't load image data")
+                // can't load image data
+            }
+            
+        }
+        let closingBoundary = "\r\n--\(boundary)--"
+        if let d = closingBoundary.data(using: .utf8) {
+            bodyData.append(d)
+        }
+    return bodyData
+    }
+
+    static func submitPictures(pictures: [String], token: String, farm: String, form: String) {
+        print(pictures)
+        
+        if let url = URL(string: baseUrl + "/app-forms/images?formName=" + form + "&farmName=" + farm) {
+            let boundary = "Boundary-\(NSUUID().uuidString)"
             var urlRequest = URLRequest(url: url)
             urlRequest.httpMethod = "POST"
             urlRequest.setValue(token, forHTTPHeaderField: "Authorization")
-            urlRequest.setValue("application/json", forHTTPHeaderField: "Content-Type")
+            urlRequest.setValue("multipart/form-data; boundary=----\(boundary)", forHTTPHeaderField: "Content-Type")
+            //urlRequest.setValue("application/json", forHTTPHeaderField: "Content-Type")
             
-            let bodyData = "formName=" + form + "&farmName=" + farm
-            print(bodyData)
-            urlRequest.httpBody = bodyData.data(using: String.Encoding.utf8)
+            //urlRequest.httpBody = bodyData.data(using: String.Encoding.utf8)
+            print(url)
+            let imgData = createRequestBodyWith(imagePaths: pictures)
+            print (imgData)
+            urlRequest.httpBody = imgData as Data
             
-            let img = UIImage(contentsOfFile: pictures[0])
-
-        
-        
-        }
+            URLSession.shared.dataTask(with: urlRequest) { (data, response, error) in
+                if error != nil{
+                    print(error.debugDescription)
+                    print(22222)
+                }else{
+                    let str = String(data: data!, encoding: String.Encoding.utf8)
+                    if (response as! HTTPURLResponse).statusCode == 200 {print(11111)
+                        print(str)
+                    }
+                    else {print(11112)
+                        print(str)
+                    }
+                }
+            }.resume()
     }
+}
 }

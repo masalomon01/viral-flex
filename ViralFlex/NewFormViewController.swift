@@ -309,7 +309,7 @@ class NewFormViewController: UIViewController, UITabBarDelegate, UITextFieldDele
             
             let window = UIApplication.shared.keyWindow!
 
-            myView?.frame = CGRect(x: 0, y: 0, width: window.frame.width, height: window.frame.height - 50)
+            myView?.frame = CGRect(x: 0, y: 0, width: window.frame.width, height: window.frame.height - 80)
             
             
             self.present(picker, animated: animated, completion: {

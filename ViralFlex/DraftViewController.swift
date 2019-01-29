@@ -317,13 +317,10 @@ class DraftViewController: UIViewController, FolderSelectDelegate, ItemClickDele
                 if status == 401 {
                     dialog.labelError.isHidden = false
                 }
-                else if status == 500 {
+                else {
                     let errorDialog = ErrorDialog()
                     errorDialog.setup()
                     errorDialog.show()
-                }
-                else{
-                    print("I'm here with no status")
                 }
             }
             self.tableViewController.refresh()

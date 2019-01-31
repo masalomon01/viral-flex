@@ -18,8 +18,7 @@ class BarCode: NSObject, NSCoding {
     }
     
     required init?(coder aDecoder: NSCoder) {
-        //code = aDecoder.decodeObject(forKey: "code") as! String
-        code = "0987654321"
+        code = (aDecoder.decodeObject(forKey: "code") as! String)
         time = aDecoder.decodeObject(forKey: "time") as? Date
     }
 }

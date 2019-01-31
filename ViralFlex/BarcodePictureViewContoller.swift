@@ -14,6 +14,7 @@ class BarcodePictureViewController: UIViewController, UITableViewDataSource, UIT
     var type: Int = 0
     var form: Form!
     var selectedPicture: Int?
+    var viewMode: Bool = false
     
     override var preferredStatusBarStyle: UIStatusBarStyle {
         return .lightContent
@@ -144,7 +145,7 @@ class BarcodePictureViewController: UIViewController, UITableViewDataSource, UIT
     }
     
     func tableView(_ tableView: UITableView, canEditRowAt indexPath: IndexPath) -> Bool {
-        return true
+        return !viewMode && type != 1
     }
     
     func tableView(_ tableView: UITableView, commit editingStyle: UITableViewCell.EditingStyle, forRowAt indexPath: IndexPath) {

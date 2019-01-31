@@ -1,6 +1,6 @@
 import UIKit
 
-class SubmittedViewController: UIViewController, FolderSelectDelegate {
+class SubmittedViewController: UIViewController, FolderSelectDelegate, ItemClickDelegate {
     
     var tableViewController: FormTableViewController!
     var selectedForm: Form?
@@ -11,6 +11,18 @@ class SubmittedViewController: UIViewController, FolderSelectDelegate {
             self.tableViewController = vc
             self.tableViewController.type = Form.TYPE_SUBMITTED
             self.tableViewController.refresh()
+            self.tableViewController.itemClickDelegate = self
+        }
+    }
+    
+    func onItemClick(sender: FormTableViewCell, position: Int) {print(12342134)
+        
+        let form = tableViewController.forms[position]
+        
+        if let controller = self.storyboard?.instantiateViewController(withIdentifier: "newFormViewController") {
+            (controller as! NewFormViewController).form = form
+            (controller as! NewFormViewController).viewMode = true
+            self.present(controller, animated: true, completion: nil)
         }
     }
     

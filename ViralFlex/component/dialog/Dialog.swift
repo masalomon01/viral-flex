@@ -170,7 +170,7 @@ class Dialog: UIView, UIPickerViewDelegate, UIPickerViewDataSource {
         if let keyboardSize = (notification.userInfo?[UIResponder.keyboardFrameEndUserInfoKey] as? NSValue)?.cgRectValue {
             
             let window = UIApplication.shared.keyWindow!
-            let y = window.frame.height - (self.frame.height + keyboardSize.height)
+            let y = max(window.frame.height - (self.frame.height + keyboardSize.height), 0)
             if self.y > y {self.frame.origin.y = y}
             else {self.frame.origin.y = self.y}
         }

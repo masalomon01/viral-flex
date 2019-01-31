@@ -40,6 +40,7 @@
 		884AC12E21CF3F0C00B894AC /* CameraViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 884AC12D21CF3F0C00B894AC /* CameraViewController.swift */; };
 		884AC13221CF97E200B894AC /* CameraView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 884AC13121CF97E200B894AC /* CameraView.xib */; };
 		884AC13421CF98BF00B894AC /* CameraView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 884AC13321CF98BF00B894AC /* CameraView.swift */; };
+		885C2EBB2202D14B002C666E /* Views.xib in Resources */ = {isa = PBXBuildFile; fileRef = 885C2EBA2202D14B002C666E /* Views.xib */; };
 		886DA00921E5DF6300FEC6BE /* CheckListViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 886DA00821E5DF6300FEC6BE /* CheckListViewController.swift */; };
 		886DA00B21E5FE8100FEC6BE /* FolderFormViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 886DA00A21E5FE8100FEC6BE /* FolderFormViewController.swift */; };
 		8892E3B921EC395700402095 /* BarCode.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8892E3B821EC395700402095 /* BarCode.swift */; };
@@ -52,6 +53,8 @@
 		8893A13721E4F14D008A775C /* FolderViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8893A13621E4F14D008A775C /* FolderViewController.swift */; };
 		8893A13921E4F1CB008A775C /* Folder.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8893A13821E4F1CB008A775C /* Folder.swift */; };
 		8893A13B21E59E7D008A775C /* AddToFolderViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8893A13A21E59E7D008A775C /* AddToFolderViewController.swift */; };
+		88A75CC42200D30900510AFC /* PicturesViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 88A75CC32200D30900510AFC /* PicturesViewController.swift */; };
+		88A75CC622014EAF00510AFC /* BarcodesViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 88A75CC522014EAF00510AFC /* BarcodesViewController.swift */; };
 		88D092C621EE3B9C001D53F6 /* Vaccination.swift in Sources */ = {isa = PBXBuildFile; fileRef = 88D092C521EE3B9C001D53F6 /* Vaccination.swift */; };
 		88DCE91F21D06983004BB098 /* RoundedButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = 88DCE91E21D06983004BB098 /* RoundedButton.swift */; };
 /* End PBXBuildFile section */
@@ -113,6 +116,7 @@
 		884AC12D21CF3F0C00B894AC /* CameraViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CameraViewController.swift; sourceTree = "<group>"; };
 		884AC13121CF97E200B894AC /* CameraView.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = CameraView.xib; sourceTree = "<group>"; };
 		884AC13321CF98BF00B894AC /* CameraView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CameraView.swift; sourceTree = "<group>"; };
+		885C2EBA2202D14B002C666E /* Views.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = Views.xib; sourceTree = "<group>"; };
 		886DA00821E5DF6300FEC6BE /* CheckListViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CheckListViewController.swift; sourceTree = "<group>"; };
 		886DA00A21E5FE8100FEC6BE /* FolderFormViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FolderFormViewController.swift; sourceTree = "<group>"; };
 		8892E3B821EC395700402095 /* BarCode.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BarCode.swift; sourceTree = "<group>"; };
@@ -125,6 +129,8 @@
 		8893A13621E4F14D008A775C /* FolderViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FolderViewController.swift; sourceTree = "<group>"; };
 		8893A13821E4F1CB008A775C /* Folder.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Folder.swift; sourceTree = "<group>"; };
 		8893A13A21E59E7D008A775C /* AddToFolderViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddToFolderViewController.swift; sourceTree = "<group>"; };
+		88A75CC32200D30900510AFC /* PicturesViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PicturesViewController.swift; sourceTree = "<group>"; };
+		88A75CC522014EAF00510AFC /* BarcodesViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BarcodesViewController.swift; sourceTree = "<group>"; };
 		88D092C521EE3B9C001D53F6 /* Vaccination.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Vaccination.swift; sourceTree = "<group>"; };
 		88DCE91E21D06983004BB098 /* RoundedButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RoundedButton.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
@@ -215,6 +221,8 @@
 				8893A12C21E266C6008A775C /* ManageTabViewController.swift */,
 				8893A12E21E27742008A775C /* DraftViewController.swift */,
 				8893A13021E2F508008A775C /* SubmittedViewController.swift */,
+				88A75CC32200D30900510AFC /* PicturesViewController.swift */,
+				88A75CC522014EAF00510AFC /* BarcodesViewController.swift */,
 				8893A13621E4F14D008A775C /* FolderViewController.swift */,
 				886DA00A21E5FE8100FEC6BE /* FolderFormViewController.swift */,
 				884AC0C321C9204E00B894AC /* NewFormViewController.swift */,
@@ -267,6 +275,7 @@
 				8893A13421E35A89008A775C /* TextField.swift */,
 				8892E3BA21EC9DEC00402095 /* SlidingTabBar.swift */,
 				88480EF121ED8C8B00FD90E1 /* UIField.swift */,
+				885C2EBA2202D14B002C666E /* Views.xib */,
 			);
 			path = component;
 			sourceTree = "<group>";
@@ -378,6 +387,7 @@
 			files = (
 				883C003721FB7577000961F2 /* user.json in Resources */,
 				884AC09B21C6A8F400B894AC /* LaunchScreen.storyboard in Resources */,
+				885C2EBB2202D14B002C666E /* Views.xib in Resources */,
 				883C003F21FD3834000961F2 /* ErrorDialog.xib in Resources */,
 				883C003321FB604A000961F2 /* SubmitDialog.xib in Resources */,
 				884AC09821C6A8F400B894AC /* Assets.xcassets in Resources */,
@@ -440,6 +450,7 @@
 				8892E3B921EC395700402095 /* BarCode.swift in Sources */,
 				88480EF021ED879A00FD90E1 /* Dialog.swift in Sources */,
 				8893A13321E35449008A775C /* LoginViewController.swift in Sources */,
+				88A75CC622014EAF00510AFC /* BarcodesViewController.swift in Sources */,
 				884788C221DB6AAF00AB138A /* FormTableViewController.swift in Sources */,
 				883C003B21FD3394000961F2 /* ErrorDialog.swift in Sources */,
 				884AC12221CC6BF800B894AC /* ScanViewController.swift in Sources */,
@@ -457,6 +468,7 @@
 				884AC0BF21C9118000B894AC /* MyTabBarController.swift in Sources */,
 				8893A13921E4F1CB008A775C /* Folder.swift in Sources */,
 				884AC13421CF98BF00B894AC /* CameraView.swift in Sources */,
+				88A75CC42200D30900510AFC /* PicturesViewController.swift in Sources */,
 				884788C421E137D200AB138A /* CheckBox.swift in Sources */,
 				884AC09121C6A8F100B894AC /* HomeViewController.swift in Sources */,
 				884AC12E21CF3F0C00B894AC /* CameraViewController.swift in Sources */,

@@ -198,6 +198,9 @@
                 </label>
                 <textField opaque="NO" tag="1" contentMode="scaleToFill" verticalHuggingPriority="252" verticalCompressionResistancePriority="751" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" placeholder="# of Days" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="1eK-Xg-3N9">
                     <rect key="frame" x="16" y="139" width="300" height="30"/>
+                    <constraints>
+                        <constraint firstAttribute="height" constant="30" id="8NI-gY-QRk"/>
+                    </constraints>
                     <nil key="textColor"/>
                     <fontDescription key="fontDescription" type="system" pointSize="14"/>
                     <textInputTraits key="textInputTraits" keyboardType="ASCIICapableNumberPad"/>
@@ -210,6 +213,9 @@
                 </label>
                 <textField opaque="NO" tag="2" contentMode="scaleToFill" verticalHuggingPriority="252" verticalCompressionResistancePriority="754" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" placeholder="# of Doses" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="Vyv-a7-eDI">
                     <rect key="frame" x="16" y="207" width="300" height="30"/>
+                    <constraints>
+                        <constraint firstAttribute="height" constant="30" id="wUP-Uy-FyC"/>
+                    </constraints>
                     <nil key="textColor"/>
                     <fontDescription key="fontDescription" type="system" pointSize="14"/>
                     <textInputTraits key="textInputTraits" keyboardType="numberPad"/>
@@ -246,6 +252,9 @@
                 </label>
                 <textField opaque="NO" tag="4" contentMode="scaleToFill" verticalHuggingPriority="252" verticalCompressionResistancePriority="754" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" placeholder="Description" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="Owr-7q-dQ6">
                     <rect key="frame" x="16" y="343" width="300" height="30"/>
+                    <constraints>
+                        <constraint firstAttribute="height" constant="30" id="ETF-je-vOL"/>
+                    </constraints>
                     <nil key="textColor"/>
                     <fontDescription key="fontDescription" type="system" pointSize="14"/>
                     <textInputTraits key="textInputTraits"/>

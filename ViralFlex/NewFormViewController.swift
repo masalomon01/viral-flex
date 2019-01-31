@@ -7,7 +7,7 @@ class NewFormViewController: UIViewController, UITabBarDelegate, UITextFieldDele
     @IBOutlet weak var textField1: UIField!
     @IBOutlet weak var textField2: UITextField!
     @IBOutlet weak var textField3: UITextField!
-    @IBOutlet weak var textfield4: UIField!
+    @IBOutlet weak var textField4: UIField!
     @IBOutlet weak var textField5: UITextField!
     @IBOutlet weak var textField6: UITextField! {
         didSet { textField6?.addDoneCancelToolbar() }
@@ -21,15 +21,22 @@ class NewFormViewController: UIViewController, UITabBarDelegate, UITextFieldDele
     @IBOutlet weak var textField13: UITextField!
     @IBOutlet weak var textField14: UITextField!
     @IBOutlet weak var textField15: UITextField!
-    @IBOutlet weak var textField16: UITextField! {
-        didSet { textField16?.addDoneCancelToolbar() }
-    }
+    @IBOutlet weak var textField16: UITextField!
     @IBOutlet weak var textField17: UITextField!
+    @IBOutlet weak var buttonClination: UIButton!
+    @IBOutlet weak var labelNote: UILabel!
     @IBOutlet weak var buttonSubmit: RoundedButton!
+    @IBOutlet weak var buttonClear: UIButton!
+    @IBOutlet weak var buttonVaccination: UIButton!
+    @IBOutlet weak var clinicalContainer: UIStackView!
+    @IBOutlet weak var clinicalContainerHeight: NSLayoutConstraint!
+    @IBOutlet weak var vaccinationContainer: UIStackView!
+    @IBOutlet weak var vaccinationContainerHeight: NSLayoutConstraint!
     
     var form: Form!
     var selectedFolder: Folder!
     var edit: Int? = nil
+    var viewMode: Bool = false
     
     
     override var preferredStatusBarStyle: UIStatusBarStyle {
@@ -41,13 +48,13 @@ class NewFormViewController: UIViewController, UITabBarDelegate, UITextFieldDele
         navigationItem.title = form.name
         
         textField1.pickerData = ["Innovax ILT Vaccine Test", "Innovax ND Vaccine Test", "Innovax ND-IBD Vaccine Test", "IBD Field Virus Test", "ILT Field Virus Test"]
-        textfield4.pickerData = ["Layer", "Broiler", "Broiler Breeder"]
+        textField4.pickerData = ["Layer", "Broiler", "Broiler Breeder"]
         textField7.pickerData = ["Feather pulp", "Spleen", "Trachea"]
         
         textField1.text = form.testType
         textField2.text = form.farmName
         textField3.text = form.country
-        textfield4.text = form.birdType
+        textField4.text = form.birdType
         textField5.text = form.hatcherySource
         textField6.text = form.samplingAge
         textField7.text = form.sampleType
@@ -61,6 +68,8 @@ class NewFormViewController: UIViewController, UITabBarDelegate, UITextFieldDele
         textField15.text = form.companyName
         textField16.text = form.postCode
         textField17.text = form.county
+        
+        if viewMode {enableViewMode()}
         
         let tap: UITapGestureRecognizer = UITapGestureRecognizer(target: self, action: #selector(dismissKeyboard))
         tap.delegate = self
@@ -76,6 +85,19 @@ class NewFormViewController: UIViewController, UITabBarDelegate, UITextFieldDele
         let pictureCount = form.pictures.count
         if pictureCount == 0 {(tabBar.items![1] ).badgeValue = nil}
         else {(tabBar.items![1] ).badgeValue = String(pictureCount)}
+        
+        if viewMode {
+            clinicalContainer.subviews.forEach({ $0.removeFromSuperview() })
+            for name in form.clinicalSigns {
+                addClinical(name: name)
+            }
+            
+            vaccinationContainer.subviews.forEach({ $0.removeFromSuperview() })
+            for vaccination in form.vaccinations {
+                addVaccination(vaccination)
+            }
+        }
+        
         
         validate()
     }
@@ -135,7 +157,12 @@ class NewFormViewController: UIViewController, UITabBarDelegate, UITextFieldDele
         }
         alertController.addAction(save)
         
-        self.present(alertController, animated: true)
+        if viewMode {
+            dismiss(animated: true, completion: nil)
+        }
+        else {
+            self.present(alertController, animated: true)
+        }
     }
     
     @IBAction func onSaveDraftClick(_ sender: Any) {
@@ -160,11 +187,16 @@ class NewFormViewController: UIViewController, UITabBarDelegate, UITextFieldDele
     
     @IBAction func onSubmitClick(_ sender: Any) {
         
-        let dialog = SubmitDialog()
-        dialog.delegate = self
-        dialog.setup()
-        dialog.show()
-        dialog.formName.text = form.name
+        if viewMode {
+            dismiss(animated: true, completion: nil)
+        }
+        else {
+            let dialog = SubmitDialog()
+            dialog.delegate = self
+            dialog.setup()
+            dialog.show()
+            dialog.formName.text = form.name
+        }
     }
     
     @IBAction func onAddToFolderClick(_ sender: Any) {
@@ -177,6 +209,7 @@ class NewFormViewController: UIViewController, UITabBarDelegate, UITextFieldDele
     
     func onFolderSelect(folder: Folder) {
         selectedFolder = folder
+        selectedFolder?.addForm(form: form)
     }
     
     func onCheckListSelect(_ selected: [Any]) {
@@ -237,7 +270,7 @@ class NewFormViewController: UIViewController, UITabBarDelegate, UITextFieldDele
             self.textField1.text = ""
             self.textField2.text = ""
             self.textField3.text = ""
-            self.textfield4.text = ""
+            self.textField4.text = ""
             self.textField5.text = ""
             self.textField6.text = ""
             self.textField7.text = ""
@@ -264,37 +297,92 @@ class NewFormViewController: UIViewController, UITabBarDelegate, UITextFieldDele
         tabBar.selectedItem = nil
         
         if item == tabBar.items![0]{
-            onSaveDraftClick(item)
+            
+            if viewMode {
+                
+                let alertController = UIAlertController(title: "Name Your Form", message: "Give a unique, pertinent name to your form. This can be chaned later.", preferredStyle: .alert)
+                
+                alertController.addTextField { (textField) in
+                    textField.text = self.form.name
+                }
+                
+                alertController.addAction(UIAlertAction(title: "Create", style: .default) { (action) in
+                    
+                    if let controller = self.storyboard?.instantiateViewController(withIdentifier: "newFormViewController") {
+                        
+                        let textField = alertController.textFields![0] as UITextField
+                        
+                        let newForm = self.form.copy() as! Form
+                        newForm.status = Form.STATUS_NEW
+                        newForm.name = textField.text!
+                        
+                        (controller as! NewFormViewController).form = newForm
+                        self.present(controller, animated: true, completion: nil)
+                    }
+                })
+                alertController.addAction(UIAlertAction(title: "Cancel", style: .cancel) { (action) in })
+                self.present(alertController, animated: true)
+            }
+            else {
+                onSaveDraftClick(item)
+            }
+            
         }
         else if item == tabBar.items![1]{
-            //            if let controller = self.storyboard?.instantiateViewController(withIdentifier: "cameraViewController") {
-            //                self.present(controller, animated: true, completion: nil)
-            //            }
             
-            showCamera(true)
+            if viewMode {
+                if let barcodePictureViewController = self.storyboard?.instantiateViewController(withIdentifier: "barcodePictureViewController") {
+                    (barcodePictureViewController as! BarcodePictureViewController).form = form
+                    (barcodePictureViewController as! BarcodePictureViewController).viewMode = viewMode
+                    present(barcodePictureViewController, animated: true, completion: nil)
+                }
+            }
+            else {
+                showCamera(true)
+            }
         }
         else if item == tabBar.items![2]{
-            if let controller = self.storyboard?.instantiateViewController(withIdentifier: "scanViewController") {
-                (controller as! ScanViewController).previousViewController = self
-                (controller as! ScanViewController).form = self.form
-                self.present(controller, animated: true, completion: nil)
+            
+            if viewMode {
+                if let barcodePictureViewController = self.storyboard?.instantiateViewController(withIdentifier: "barcodePictureViewController") {
+                    (barcodePictureViewController as! BarcodePictureViewController).form = form
+                    (barcodePictureViewController as! BarcodePictureViewController).viewMode = viewMode
+                    present(barcodePictureViewController, animated: true, completion: nil)
+                }
             }
+            else {
+                if let controller = self.storyboard?.instantiateViewController(withIdentifier: "scanViewController") {
+                    (controller as! ScanViewController).previousViewController = self
+                    (controller as! ScanViewController).form = self.form
+                    present(controller, animated: true, completion: nil)
+                }
+            }
+            
+            
         }
         else if item == tabBar.items![3] {
-            let alertController = UIAlertController(title: "Delete this?", message: "Deleting this cannot be undone.", preferredStyle: .alert)
             
-            let okAction = UIAlertAction(title: "Delete", style: .default) { (action) in
-                self.dismiss(animated: true, completion: nil)
+            if viewMode {
+                
+                if let controller = self.storyboard?.instantiateViewController(withIdentifier: "addToFolderViewController") {
+                    (controller as! AddToFolderViewController).folderSelectDelegate = self
+                    self.present(controller, animated: true, completion: nil)
+                }
             }
-            alertController.addAction(okAction)
-            let cancelAction = UIAlertAction(title: "Cancel", style: .cancel) { (action) in }
-            alertController.addAction(cancelAction)
-            
-            self.present(alertController, animated: true)
+            else {
+                
+                let alertController = UIAlertController(title: "Delete this?", message: "Deleting this cannot be undone.", preferredStyle: .alert)
+                
+                alertController.addAction(UIAlertAction(title: "Delete", style: .default) { (action) in
+                    self.dismiss(animated: true, completion: nil)
+                })
+                alertController.addAction(UIAlertAction(title: "Cancel", style: .cancel) { (action) in })
+                
+                self.present(alertController, animated: true)
+            }
         }
-        
-        
     }
+    
     
     func showCamera(_ animated: Bool) {
         
@@ -327,7 +415,7 @@ class NewFormViewController: UIViewController, UITabBarDelegate, UITextFieldDele
         form.testType = textField1.text
         form.farmName = textField2.text
         form.country = textField3.text
-        form.birdType = textfield4.text
+        form.birdType = textField4.text
         form.hatcherySource = textField5.text
         form.samplingAge = textField6.text
         form.sampleType = textField7.text
@@ -347,10 +435,8 @@ class NewFormViewController: UIViewController, UITabBarDelegate, UITextFieldDele
         
         if edit==nil {
             form.saveDraft()
-            selectedFolder?.addForm(form: form)
         }
         else {
-            selectedFolder?.addForm(form: form)
             form.saveChanges()
         }
     }
@@ -363,7 +449,7 @@ class NewFormViewController: UIViewController, UITabBarDelegate, UITextFieldDele
     }
     
     func validate() {
-        if (textField1.text != "" && textField2.text != "" && textField3.text != "" && textfield4.text != "" && form.barCodes.count > 0) {
+        if (textField1.text != "" && textField2.text != "" && textField3.text != "" && textField4.text != "" && form.barCodes.count > 0) {
             buttonSubmit.isEnabled = true
             buttonSubmit.backgroundColor = UIColor(red: 42/255, green: 49/255, blue: 126/255, alpha: 1.0)
         }
@@ -371,5 +457,79 @@ class NewFormViewController: UIViewController, UITabBarDelegate, UITextFieldDele
             buttonSubmit.isEnabled = false
             buttonSubmit.backgroundColor = UIColor(red: 188/255, green: 190/255, blue: 192/255, alpha: 1.0)
         }
+    }
+    
+    func addClinical(name: String) {
+        
+        let bundle = Bundle(for: type(of: self))
+        let nib = UINib(nibName: "Views", bundle: bundle)
+        let view = nib.instantiate(withOwner: nil, options: nil)[0] as! UIView
+        
+        if let foundView = view.viewWithTag(100) {
+            (foundView as! CheckBox).isSelected = true
+        }
+        if let foundView = view.viewWithTag(101) {
+            (foundView as! UILabel).text = name
+        }
+        
+        clinicalContainer.addArrangedSubview(view)
+        clinicalContainerHeight.constant = CGFloat(clinicalContainer.subviews.count * 50)
+    }
+    
+    func addVaccination(_ vaccination: Vaccination) {
+        
+        let bundle = Bundle(for: type(of: self))
+        let nib = UINib(nibName: "Views", bundle: bundle)
+        let view = nib.instantiate(withOwner: nil, options: nil)[1] as! UIView
+        
+        if let formName = view.viewWithTag(1) {
+            (formName as! UILabel).text = vaccination.name
+        }
+        if let age = view.viewWithTag(2), vaccination.age != nil {
+            (age as! UILabel).text = String(vaccination.age!)
+        }
+        if let doses = view.viewWithTag(3), vaccination.doses != nil {
+            (doses as! UILabel).text = String(vaccination.doses!)
+        }
+        if let administration = view.viewWithTag(4), vaccination.admin != nil {
+            (administration as! UILabel).text = String(vaccination.admin!)
+        }
+        if let brand = view.viewWithTag(5), vaccination.brand != nil {
+            (brand as! UILabel).text = String(vaccination.brand!)
+        }
+        
+        vaccinationContainer.addArrangedSubview(view)
+        vaccinationContainerHeight.constant = CGFloat(vaccinationContainer.subviews.count * 150)
+    }
+    
+    func enableViewMode() {
+        navigationItem.rightBarButtonItem = nil
+        
+        textField1.isUserInteractionEnabled = false
+        textField2.isUserInteractionEnabled = false
+        textField3.isUserInteractionEnabled = false
+        textField4.isUserInteractionEnabled = false
+        textField5.isUserInteractionEnabled = false
+        textField6.isUserInteractionEnabled = false
+        textField7.isUserInteractionEnabled = false
+        textField8.isUserInteractionEnabled = false
+        textField9.isUserInteractionEnabled = false
+        textField10.isUserInteractionEnabled = false
+        textField11.isUserInteractionEnabled = false
+        textField12.isUserInteractionEnabled = false
+        textField13.isUserInteractionEnabled = false
+        textField14.isUserInteractionEnabled = false
+        textField15.isUserInteractionEnabled = false
+        textField16.isUserInteractionEnabled = false
+        textField17.isUserInteractionEnabled = false
+        
+        buttonClination.isUserInteractionEnabled = false
+        buttonVaccination.isUserInteractionEnabled = false
+        labelNote.isHidden = true
+        buttonClear.isHidden = true
+        buttonSubmit.setTitle("Done", for: .normal)
+        
+        tabBar.items![0].image = UIImage(named: "copy")
+        tabBar.items![3].image = UIImage(named: "download")
     }
 }

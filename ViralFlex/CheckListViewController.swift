@@ -200,6 +200,7 @@ class CheckListViewController: UIViewController, UITableViewDataSource, UITableV
     
     @IBAction func onAddVaccinationClick() {
         
+        selected = nil
         let dialog = Dialog()
         dialog.vaccinationsDelegate = self
         dialog.show()
@@ -220,18 +221,11 @@ class CheckListViewController: UIViewController, UITableViewDataSource, UITableV
         tableView.reloadData()
     }
     
-    func onDialogResult(_ newVaccination: Vaccination) {
+    func onDialogResult(_ newVaccination: Vaccination) {print(1234123412)
         
         if selected != nil {
-//            let item = selectedResult[selected!] as! Vaccination
-            
-//            item.age = Int(age)
-//            item.doses = Int(doses)
-//            item.admin = admin
-//            item.brand = brand
             selectedResult[selected!] = newVaccination
             
-//            selectedResult[selected!] = item
             for (i, section) in row!.enumerated() {
                 for (j, vaccination) in (section as! [Vaccination]).enumerated() {
                     if vaccination.uuid == newVaccination.uuid {

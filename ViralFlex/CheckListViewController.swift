@@ -115,7 +115,7 @@ class CheckListViewController: UIViewController, UITableViewDataSource, UITableV
         else {
             var vaccination = item as! Vaccination
             for selected in selectedResult {
-                if (selected as! Vaccination).name == vaccination.name {
+                if (selected as! Vaccination).name == vaccination.name.replacingOccurrences(of: "\n", with: " ") {
                     vaccination = selected as! Vaccination
                     cell.checkBox.isSelected = true
                 }

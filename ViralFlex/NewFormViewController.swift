@@ -38,6 +38,14 @@ class NewFormViewController: UIViewController, UITabBarDelegate, UITextFieldDele
     var edit: Int? = nil
     var viewMode: Bool = false
     
+    let vaccinationSection = ["Innovax", "IBD", "ILT", "ND", "Other Vaccinations"]
+    let vaccinationRow = [
+        [Vaccination("Innovax\nILT"), Vaccination("Innovax\nILT-SB"), Vaccination("Innovax\nND"), Vaccination("Innovax\nND-IBD"), Vaccination("Innovax\nND-SB")],
+        [Vaccination("Nobilis\n228E"), Vaccination("Nobilis/\nClonevac D78"), Vaccination("Univax-BD"), Vaccination("Univax-Plus"), Vaccination("89/03"), Vaccination("Bursaplex"), Vaccination("Bursa-Vac"), Vaccination("Bursine 2"), Vaccination("Bursine Plus"), Vaccination("S706"), Vaccination("SVS510"), Vaccination("Transmune\n2512")],
+        [Vaccination("LT-Ivax"), Vaccination("Nobilis\nILT"), Vaccination("Trachivax"), Vaccination("Other ILT")],
+        [Vaccination("Newhatch-C2")],
+        [Vaccination("2177"), Vaccination("Mildvac\nArk"), Vaccination("Mildvac\nGA-98"), Vaccination("Mildvac\nMass-Ark"), Vaccination("Mildvac\nMass+Conn"), Vaccination("Newhatch\nC2-M"), Vaccination("Newhatch\nC2-MC"), Vaccination("Nobilis\nIB 4-91"), Vaccination("Nobilis\nIB H120"), Vaccination("Nobilis\nIB Ma5"), Vaccination("Nobilis\nIB Rhino CV"), Vaccination("Nobilis\nTRT Live"), Vaccination("Monovalent\nHVT"), Vaccination("Ris-ma"), Vaccination("Rismavac"), Vaccination("Shor-Bron-D"), Vaccination("Injectible Antibiotic"), Vaccination("1/96"), Vaccination("Ark"), Vaccination("CR88"), Vaccination("H120 + D274\n(IB Primer)"), Vaccination("Ibmm plus\nArk"), Vaccination("Other\nCVI/Rispens"), Vaccination("SB1"), Vaccination("add")]]
+    
     
     override var preferredStatusBarStyle: UIStatusBarStyle {
         return .lightContent
@@ -86,16 +94,15 @@ class NewFormViewController: UIViewController, UITabBarDelegate, UITextFieldDele
         if pictureCount == 0 {(tabBar.items![1] ).badgeValue = nil}
         else {(tabBar.items![1] ).badgeValue = String(pictureCount)}
         
-        if viewMode {
-            clinicalContainer.subviews.forEach({ $0.removeFromSuperview() })
-            for name in form.clinicalSigns {
-                addClinical(name: name)
-            }
-            
-            vaccinationContainer.subviews.forEach({ $0.removeFromSuperview() })
-            for vaccination in form.vaccinations {
-                addVaccination(vaccination)
-            }
+        
+        clinicalContainer.subviews.forEach({ $0.removeFromSuperview() })
+        for name in form.clinicalSigns {
+            addClinical(name: name)
+        }
+        
+        vaccinationContainer.subviews.forEach({ $0.removeFromSuperview() })
+        for vaccination in form.vaccinations {
+            addVaccination(vaccination)
         }
         
         
@@ -114,14 +121,8 @@ class NewFormViewController: UIViewController, UITabBarDelegate, UITextFieldDele
             (segue.destination as! CheckListViewController).selectedResult = form.clinicalSigns
         }
         else {
-            (segue.destination as! CheckListViewController).section = ["Innovax", "IBD", "ILT", "ND", "Other Vaccinations"]
-            (segue.destination as! CheckListViewController).row = [
-                [Vaccination("Innovax\nILT"), Vaccination("Innovax\nILT-SB"), Vaccination("Innovax\nND"), Vaccination("Innovax\nND-IBD"), Vaccination("Innovax\nND-SB")],
-                [Vaccination("Nobilis\n228E"), Vaccination("Nobilis/\nClonevac D78"), Vaccination("Univax-BD"), Vaccination("Univax-Plus"), Vaccination("89/03"), Vaccination("Bursaplex"), Vaccination("Bursa-Vac"), Vaccination("Bursine 2"), Vaccination("Bursine Plus"), Vaccination("S706"), Vaccination("SVS510"), Vaccination("Transmune\n2512")],
-                [Vaccination("LT-Ivax"), Vaccination("Nobilis\nILT"), Vaccination("Trachivax"), Vaccination("Other ILT")],
-                [Vaccination("Newhatch-C2")],
-                [Vaccination("2177"), Vaccination("Mildvac\nArk"), Vaccination("Mildvac\nGA-98"), Vaccination("Mildvac\nMass-Ark"), Vaccination("Mildvac\nMass+Conn"), Vaccination("Newhatch\nC2-M"), Vaccination("Newhatch\nC2-MC"), Vaccination("Nobilis\nIB 4-91"), Vaccination("Nobilis\nIB H120"), Vaccination("Nobilis\nIB Ma5"), Vaccination("Nobilis\nIB Rhino CV"), Vaccination("Nobilis\nTRT Live"), Vaccination("Monovalent\nHVT"), Vaccination("Ris-ma"), Vaccination("Rismavac"), Vaccination("Shor-Bron-D"), Vaccination("Injectible Antibiotic"), Vaccination("1/96"), Vaccination("Ark"), Vaccination("CR88"), Vaccination("H120 + D274\n(IB Primer)"), Vaccination("Ibmm plus\nArk"), Vaccination("Other\nCVI/Rispens"), Vaccination("SB1"), Vaccination("add")]
-            ]
+            (segue.destination as! CheckListViewController).section = vaccinationSection
+            (segue.destination as! CheckListViewController).row = vaccinationRow
             (segue.destination as! CheckListViewController).checkListSelectDelegate = self
             (segue.destination as! CheckListViewController).navigationTitleString = "Vaccination Treatments"
             (segue.destination as! CheckListViewController).selectedResult = form.vaccinations
@@ -449,7 +450,7 @@ class NewFormViewController: UIViewController, UITabBarDelegate, UITextFieldDele
     }
     
     func validate() {
-        if (textField1.text != "" && textField2.text != "" && textField3.text != "" && textField4.text != "" && form.barCodes.count > 0) {
+        if (textField1.text != "" && textField2.text != "" && textField3.text != "" && textField4.text != "" && textField6.text != "" && textField7.text != "" && form.barCodes.count > 0) {
             buttonSubmit.isEnabled = true
             buttonSubmit.backgroundColor = UIColor(red: 42/255, green: 49/255, blue: 126/255, alpha: 1.0)
         }
@@ -482,19 +483,29 @@ class NewFormViewController: UIViewController, UITabBarDelegate, UITextFieldDele
         let nib = UINib(nibName: "Views", bundle: bundle)
         let view = nib.instantiate(withOwner: nil, options: nil)[1] as! UIView
         
-        if let formName = view.viewWithTag(1) {
-            (formName as! UILabel).text = vaccination.name
+        for (i, section) in vaccinationRow.enumerated() {
+            for item in section {
+                
+                if let sectionName = view.viewWithTag(1), item.name.replacingOccurrences(of: "\n", with: " ") == vaccination.name {
+                    (sectionName as! UILabel).text = vaccinationSection[i]
+                    break;
+                }
+            }
         }
-        if let age = view.viewWithTag(2), vaccination.age != nil {
+        
+        if let name = view.viewWithTag(2) {
+            (name as! UILabel).text = vaccination.name
+        }
+        if let age = view.viewWithTag(3), vaccination.age != nil {
             (age as! UILabel).text = String(vaccination.age!)
         }
-        if let doses = view.viewWithTag(3), vaccination.doses != nil {
+        if let doses = view.viewWithTag(4), vaccination.doses != nil {
             (doses as! UILabel).text = String(vaccination.doses!)
         }
-        if let administration = view.viewWithTag(4), vaccination.admin != nil {
+        if let administration = view.viewWithTag(5), vaccination.admin != nil {
             (administration as! UILabel).text = String(vaccination.admin!)
         }
-        if let brand = view.viewWithTag(5), vaccination.brand != nil {
+        if let brand = view.viewWithTag(6), vaccination.brand != nil {
             (brand as! UILabel).text = String(vaccination.brand!)
         }
         

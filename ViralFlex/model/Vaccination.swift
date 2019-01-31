@@ -47,6 +47,6 @@ class Vaccination: NSObject, NSCoding, NSCopying {
     }
     
     static func == (lhs: Vaccination, rhs: Vaccination) -> Bool {
-        return lhs.uuid == rhs.uuid
+        return lhs.name.replacingOccurrences(of: "\n", with: " ") == rhs.name.replacingOccurrences(of: "\n", with: " ")
     }
 }

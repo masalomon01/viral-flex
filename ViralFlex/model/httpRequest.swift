@@ -199,16 +199,15 @@ class HttpRequest {
     static func submitPictures(pictures: [String], token: String, farm: String, form: String) {
         print(pictures)
         
-        if let url = URL(string: baseUrl + "/app-forms/images?formName=" + form + "&farmName=" + farm) {
+        if let pic_url = URL(string: baseUrl + "/app-forms/images?formName=" + form + "&farmName=" + farm) {
             let boundary = "Boundary-\(NSUUID().uuidString)"
-            var urlRequest = URLRequest(url: url)
+            var urlRequest = URLRequest(url: pic_url)
             urlRequest.httpMethod = "POST"
             urlRequest.setValue(token, forHTTPHeaderField: "Authorization")
             urlRequest.setValue("multipart/form-data; boundary=----\(boundary)", forHTTPHeaderField: "Content-Type")
             //urlRequest.setValue("application/json", forHTTPHeaderField: "Content-Type")
-            
             //urlRequest.httpBody = bodyData.data(using: String.Encoding.utf8)
-            print(url)
+            print(pic_url)
             let imgData = createRequestBodyWith(imagePaths: pictures)
             print (imgData)
             urlRequest.httpBody = imgData as Data

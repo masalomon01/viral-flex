@@ -149,9 +149,9 @@ class FolderFormViewController: UIViewController, UITableViewDataSource, UITable
             }))
         }
         
-        if type == "draft" {
-            alertController.addAction(UIAlertAction(title: "View Attachments", style: .default, handler: { (action) -> Void in }))
-        }
+        //if type == "draft" {
+        //    alertController.addAction(UIAlertAction(title: "View Attachments", style: .default, handler: { (action) -> Void in }))
+        //}
         
         alertController.addAction(UIAlertAction(title: "Move to Folder", style: .default, handler: { (action) -> Void in
             
@@ -202,13 +202,13 @@ class FolderFormViewController: UIViewController, UITableViewDataSource, UITable
             }))
         }
         
-        if type == "draft" {
-            alertController.addAction(UIAlertAction(title: "Submit", style: .default, handler: { (action) -> Void in
+        //if type == "draft" {
+        //    alertController.addAction(UIAlertAction(title: "Submit", style: .default, handler: { (action) -> Void in
                 
-                form.submit()
+        //        form.submit()
                 self.tableView.reloadData()
-            }))
-        }
+        //    }))
+        //}
         
         alertController.addAction(UIAlertAction(title: "Cancel", style: .cancel, handler: { (action) -> Void in }))
         

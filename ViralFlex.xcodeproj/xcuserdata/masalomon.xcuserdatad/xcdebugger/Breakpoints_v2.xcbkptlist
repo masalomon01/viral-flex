@@ -10,7 +10,7 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "ViralFlex/BarcodePictureViewContoller.swift"
-            timestampString = "570429592.392036"
+            timestampString = "570648420.715394"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
             startingLineNumber = "14"
@@ -26,12 +26,12 @@
                   moduleName = "ViralFlex"
                   usesParentBreakpointCondition = "Yes"
                   urlString = "file:///Users/masalomon/Documents/Git/viral-flex/ViralFlex/BarcodePictureViewContoller.swift"
-                  timestampString = "570429592.7447259"
+                  timestampString = "570669077.335517"
                   startingColumnNumber = "9223372036854775807"
                   endingColumnNumber = "9223372036854775807"
                   startingLineNumber = "14"
                   endingLineNumber = "14"
-                  offsetFromSymbolStart = "92">
+                  offsetFromSymbolStart = "102">
                </Location>
                <Location
                   shouldBeEnabled = "Yes"
@@ -41,12 +41,12 @@
                   moduleName = "ViralFlex"
                   usesParentBreakpointCondition = "Yes"
                   urlString = "file:///Users/masalomon/Documents/Git/viral-flex/ViralFlex/BarcodePictureViewContoller.swift"
-                  timestampString = "570429592.748171"
+                  timestampString = "570669077.337955"
                   startingColumnNumber = "9223372036854775807"
                   endingColumnNumber = "9223372036854775807"
                   startingLineNumber = "14"
                   endingLineNumber = "14"
-                  offsetFromSymbolStart = "104">
+                  offsetFromSymbolStart = "114">
                </Location>
                <Location
                   shouldBeEnabled = "Yes"
@@ -56,12 +56,12 @@
                   moduleName = "ViralFlex"
                   usesParentBreakpointCondition = "Yes"
                   urlString = "file:///Users/masalomon/Documents/Git/viral-flex/ViralFlex/BarcodePictureViewContoller.swift"
-                  timestampString = "570429592.7524951"
+                  timestampString = "570669077.339837"
                   startingColumnNumber = "9223372036854775807"
                   endingColumnNumber = "9223372036854775807"
                   startingLineNumber = "14"
                   endingLineNumber = "14"
-                  offsetFromSymbolStart = "620">
+                  offsetFromSymbolStart = "696">
                </Location>
                <Location
                   shouldBeEnabled = "Yes"
@@ -71,12 +71,12 @@
                   moduleName = "ViralFlex"
                   usesParentBreakpointCondition = "Yes"
                   urlString = "file:///Users/masalomon/Documents/Git/viral-flex/ViralFlex/BarcodePictureViewContoller.swift"
-                  timestampString = "570429592.7565711"
+                  timestampString = "570669077.342032"
                   startingColumnNumber = "9223372036854775807"
                   endingColumnNumber = "9223372036854775807"
                   startingLineNumber = "14"
                   endingLineNumber = "14"
-                  offsetFromSymbolStart = "596">
+                  offsetFromSymbolStart = "667">
                </Location>
             </Locations>
          </BreakpointContent>

@@ -517,12 +517,18 @@ class NewFormViewController: UIViewController, UITabBarDelegate, UITextFieldDele
         navigationItem.rightBarButtonItem = nil
         
         textField1.isUserInteractionEnabled = false
+        textField1.type = 0
+        textField1.initView()
         textField2.isUserInteractionEnabled = false
         textField3.isUserInteractionEnabled = false
         textField4.isUserInteractionEnabled = false
+        textField4.type = 0
+        textField7.initView()
         textField5.isUserInteractionEnabled = false
         textField6.isUserInteractionEnabled = false
         textField7.isUserInteractionEnabled = false
+        textField7.type = 0
+        textField7.initView()
         textField8.isUserInteractionEnabled = false
         textField9.isUserInteractionEnabled = false
         textField10.isUserInteractionEnabled = false

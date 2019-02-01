@@ -25,7 +25,7 @@ class CameraView: UIView, UIImagePickerControllerDelegate, UINavigationControlle
         let docUrls = fileManager.urls(for: .documentDirectory, in: .userDomainMask)
         let docUrl = docUrls.first
 
-        let interval = Date.timeIntervalSinceReferenceDate
+        let interval = Date().timeIntervalSince1970
         let name = "\(interval).jpg"
         let url = docUrl?.appendingPathComponent(name)
         let data = image.jpegData(compressionQuality: 0.9)
@@ -67,38 +67,10 @@ class CameraView: UIView, UIImagePickerControllerDelegate, UINavigationControlle
         
         if UIImagePickerController.isSourceTypeAvailable(UIImagePickerController.SourceType.camera) {
             picker.sourceType = UIImagePickerController.SourceType.photoLibrary
-//            picker.allowsEditing = true
-            //                picker.showsCameraControls = false
-            
-//            let myView = Bundle.main.loadNibNamed("CameraView", owner: nil, options: nil)?.first as? CameraView
-//
-//
-//            let window = UIApplication.shared.keyWindow!
-//
-//            myView?.frame = CGRect(x: 0, y: 0, width: window.frame.width, height: window.frame.height - 50)
-            
             
             imagePickerController.present(picker, animated: true, completion: {
-//                myView?.controller = self.controller
-//                myView?.imagePickerController = picker
                 picker.delegate = self
-//                picker.cameraOverlayView = myView
             })
         }
     }
-    
-    
-//    @IBAction func onPhotoLibraryClick(_ sender: Any) {
-//
-//        if UIImagePickerController.isSourceTypeAvailable(UIImagePickerController.SourceType.photoLibrary) {
-//            imagePickerController.sourceType = UIImagePickerController.SourceType.photoLibrary
-//
-//            imagePickerController.navigationBar.topItem!.rightBarButtonItem?.tintColor = UIColor.black
-//
-//            imagePickerController.allowsEditing = true
-//            //            imagePickerController.delegate = self
-//            //            controller.present(imagePickerController, animated: true, completion: nil)
-//        }
-//    }
-
 }

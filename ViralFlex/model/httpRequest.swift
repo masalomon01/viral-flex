@@ -1,5 +1,6 @@
 import Foundation
 import UIKit
+import MobileCoreServices
 
 class HttpRequest {
     
@@ -136,21 +137,20 @@ class HttpRequest {
             URLSession.shared.dataTask(with: urlRequest) { (data, response, error) in
                 if error != nil{
                     print(error.debugDescription)
-                    print(22222)
                 }else{
                     let str = String(data: data!, encoding: String.Encoding.utf8)
-                    if (response as! HTTPURLResponse).statusCode == 200 {print(11111)
-                        print(str)
+                    print(str)
+                    if (response as! HTTPURLResponse).statusCode == 200 {
+                        
                         if form.pictures != [] {
-                            submitPictures(pictures: form.pictures, token: token, farm: form.farmName ?? "farm", form: form.name)
+                            submitPictures(token: token, form: form)
                             onRequestSuccess(response as! HTTPURLResponse)
                         }
                         else{
                             onRequestSuccess(response as! HTTPURLResponse)
                         }
                     }
-                    else {print(11112)
-                        print(str)
+                    else {
                         onRequestFailed(response as! HTTPURLResponse)
                     }
                 }
@@ -161,71 +161,83 @@ class HttpRequest {
         
     }
     
-    static func createRequestBodyWith(imagePaths:[String]) -> Data{
-        var bodyData = Data()
-        let boundary: String
-        boundary = "Boundary-\(NSUUID().uuidString)"
     
-        for each in imagePaths {
-            let url = URL(fileURLWithPath: each)
-            let filename = url.lastPathComponent
-            let splitName = filename.split(separator: ".")
-            let name = String(describing: splitName.first)
-            let filetype = String(describing: splitName.last)
-            
-            let imgBoundary = "\r\n--\(boundary)\r\nContent-Type: image/\(filetype)\r\nContent-Disposition: form-data; filename=\(filename); name=\(name)\r\n\r\n"
-            
-            if let d = imgBoundary.data(using: .utf8) {
-                bodyData.append(d)
-            }
-            
-            do {
-                let imgData = try Data(contentsOf:url, options:[])
-                bodyData.append(imgData)
-            }
-            catch {
-                print("can't load image data")
-                // can't load image data
-            }
-            
-        }
-        let closingBoundary = "\r\n--\(boundary)--"
-        if let d = closingBoundary.data(using: .utf8) {
-            bodyData.append(d)
-        }
-    return bodyData
-    }
-
-    static func submitPictures(pictures: [String], token: String, farm: String, form: String) {
-        print(pictures)
+    static func createRequest(token: String, form: String, farm: String, pictures: [String]) throws -> URLRequest {
         
-        if let pic_url = URL(string: baseUrl + "/app-forms/images?formName=" + form + "&farmName=" + farm) {
-            let boundary = "Boundary-\(NSUUID().uuidString)"
-            var urlRequest = URLRequest(url: pic_url)
-            urlRequest.httpMethod = "POST"
-            urlRequest.setValue(token, forHTTPHeaderField: "Authorization")
-            urlRequest.setValue("multipart/form-data; boundary=----\(boundary)", forHTTPHeaderField: "Content-Type")
-            //urlRequest.setValue("application/json", forHTTPHeaderField: "Content-Type")
-            //urlRequest.httpBody = bodyData.data(using: String.Encoding.utf8)
-            print(pic_url)
-            let imgData = createRequestBodyWith(imagePaths: pictures)
-            print (imgData)
-            urlRequest.httpBody = imgData as Data
+        let boundary = generateBoundaryString()
+        
+//                let requestUrl = URL(string: "https://prod.ridehail.metropia.com/v2/rider/image")!
+        let requestUrl = URL(string: baseUrl + "/app-forms/images?formName=" + form + "&farmName=" + farm)!
+        
+        var request = URLRequest(url: requestUrl)
+        request.httpMethod = "POST"
+        request.setValue(token, forHTTPHeaderField: "Authorization")
+        request.setValue("multipart/form-data; boundary=\(boundary)", forHTTPHeaderField: "Content-Type")
+        
+        request.httpBody = try createBody(filePathKey: "images", paths: pictures, boundary: boundary)
+        
+        return request
+    }
+    
+    static func createBody(filePathKey: String, paths: [String], boundary: String) throws -> Data {
+        var body = Data()
+        
+        for path in paths {
+            let url = URL(fileURLWithPath: path)
+            let filename = url.lastPathComponent
+            let data = try Data(contentsOf: url)
+            let mimetype = mimeType(for: path)
             
-            URLSession.shared.dataTask(with: urlRequest) { (data, response, error) in
-                if error != nil{
-                    print(error.debugDescription)
-                    print(22222)
-                }else{
-                    let str = String(data: data!, encoding: String.Encoding.utf8)
-                    if (response as! HTTPURLResponse).statusCode == 200 {print(11111)
-                        print(str)
-                    }
-                    else {print(11112)
-                        print(str)
-                    }
-                }
+            body.append("--\(boundary)\r\n")
+            body.append("Content-Disposition: form-data; name=\"\(filePathKey)\"; filename=\"\(filename)\"\r\n")
+            body.append("Content-Type: \(mimetype)\r\n\r\n")
+            body.append(data)
+            body.append("\r\n")
+        }
+        
+        body.append("--\(boundary)--\r\n")
+        return body
+    }
+    
+    
+    static func generateBoundaryString() -> String {
+        return "Boundary-\(UUID().uuidString)"
+    }
+    
+    
+    static func mimeType(for path: String) -> String {
+        let url = URL(fileURLWithPath: path)
+        let pathExtension = url.pathExtension
+        
+        if let uti = UTTypeCreatePreferredIdentifierForTag(kUTTagClassFilenameExtension, pathExtension as NSString, nil)?.takeRetainedValue() {
+            if let mimetype = UTTypeCopyPreferredTagWithClass(uti, kUTTagClassMIMEType)?.takeRetainedValue() {
+                return mimetype as String
+            }
+        }
+        return "application/octet-stream"
+    }
+    
+    static func submitPictures(token: String, form: Form) {
+        
+        let request = try? createRequest(token: token, form: form.farmName!, farm: form.farmName!, pictures: form.pictures)
+        
+        URLSession.shared.dataTask(with: request!) { (data, response, error) in
+            if error != nil{
+                print(error.debugDescription)
+            }else{
+                let str = String(data: data!, encoding: String.Encoding.utf8)
+                print(str)
+            }
             }.resume()
     }
 }
+
+
+extension Data {
+    
+    mutating func append(_ string: String, using encoding: String.Encoding = .utf8) {
+        if let data = string.data(using: encoding) {
+            append(data)
+        }
+    }
 }

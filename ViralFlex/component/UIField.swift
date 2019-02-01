@@ -41,11 +41,16 @@ import UIKit
     
     func initView() {
         
+        
+        rightViewMode = UITextField.ViewMode.always
+        rightView = UIImageView(frame: CGRect(x: 0, y: 0, width: 16 + 10, height: 9.0))
+        rightView!.contentMode = UIView.ContentMode.center
+        
         if type == Dialog.TYPE_PICKER {
-            rightViewMode = UITextField.ViewMode.always
-            rightView = UIImageView(frame: CGRect(x: 0, y: 0, width: 16 + 10, height: 9.0))
-            rightView!.contentMode = UIView.ContentMode.center
             (rightView as! UIImageView).image = UIImage(named: "arrowDownSelected")
+        }
+        else {
+            (rightView as! UIImageView).image = nil
         }
         
         addTarget(self, action: #selector(onTouch), for: .touchUpInside)

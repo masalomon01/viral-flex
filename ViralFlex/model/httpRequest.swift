@@ -219,7 +219,7 @@ class HttpRequest {
     
     static func submitPictures(token: String, form: Form) {
         
-        let request = try? createRequest(token: token, form: form.farmName!, farm: form.farmName!, pictures: form.pictures)
+        let request = try? createRequest(token: token, form: form.name, farm: form.farmName!, pictures: form.pictures)
         
         URLSession.shared.dataTask(with: request!) { (data, response, error) in
             if error != nil{

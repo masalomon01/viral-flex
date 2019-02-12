@@ -115,7 +115,7 @@ class Dialog: UIView, UIPickerViewDelegate, UIPickerViewDataSource {
                 textBrand.text = vaccination?.brand
             }
             
-            textAdmin.pickerData = ["Oral", "Injection", "Coarse spray", "Intraocular", "Intramuscular", "Nasal drop", "Water", "In-ovo", "Wing-web"]
+            textAdmin.pickerData = ["Oral", "Subcutaneous Injection", "Coarse spray", "Intraocular", "Intramuscular", "Nasal drop", "Water", "In-ovo", "Wing-web"]
         }
     }
     

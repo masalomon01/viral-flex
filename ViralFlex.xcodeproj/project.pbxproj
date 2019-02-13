@@ -8,6 +8,7 @@
 
 /* Begin PBXBuildFile section */
 		880BFC6C21FB1A3D006DAE9A /* httpRequest.swift in Sources */ = {isa = PBXBuildFile; fileRef = 880BFC6B21FB1A3D006DAE9A /* httpRequest.swift */; };
+		881D672A22143640004D1AB7 /* HelpViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 881D672922143640004D1AB7 /* HelpViewController.swift */; };
 		882E907D21F1B92300893A67 /* BarcodePictureViewContoller.swift in Sources */ = {isa = PBXBuildFile; fileRef = 882E907C21F1B92200893A67 /* BarcodePictureViewContoller.swift */; };
 		883C003021FB59F1000961F2 /* SubmitDialog.swift in Sources */ = {isa = PBXBuildFile; fileRef = 883C002F21FB59F1000961F2 /* SubmitDialog.swift */; };
 		883C003321FB604A000961F2 /* SubmitDialog.xib in Resources */ = {isa = PBXBuildFile; fileRef = 883C003221FB604A000961F2 /* SubmitDialog.xib */; };
@@ -78,6 +79,7 @@
 
 /* Begin PBXFileReference section */
 		880BFC6B21FB1A3D006DAE9A /* httpRequest.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = httpRequest.swift; sourceTree = "<group>"; };
+		881D672922143640004D1AB7 /* HelpViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HelpViewController.swift; sourceTree = "<group>"; };
 		882E907C21F1B92200893A67 /* BarcodePictureViewContoller.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BarcodePictureViewContoller.swift; sourceTree = "<group>"; };
 		883C002F21FB59F1000961F2 /* SubmitDialog.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SubmitDialog.swift; sourceTree = "<group>"; };
 		883C003221FB604A000961F2 /* SubmitDialog.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = SubmitDialog.xib; sourceTree = "<group>"; };
@@ -217,6 +219,7 @@
 				8893A13221E35449008A775C /* LoginViewController.swift */,
 				884AC0BE21C9118000B894AC /* MyTabBarController.swift */,
 				884AC09021C6A8F100B894AC /* HomeViewController.swift */,
+				881D672922143640004D1AB7 /* HelpViewController.swift */,
 				884AC09221C6A8F100B894AC /* ManageViewController.swift */,
 				8893A12C21E266C6008A775C /* ManageTabViewController.swift */,
 				8893A12E21E27742008A775C /* DraftViewController.swift */,
@@ -469,6 +472,7 @@
 				8893A13921E4F1CB008A775C /* Folder.swift in Sources */,
 				884AC13421CF98BF00B894AC /* CameraView.swift in Sources */,
 				88A75CC42200D30900510AFC /* PicturesViewController.swift in Sources */,
+				881D672A22143640004D1AB7 /* HelpViewController.swift in Sources */,
 				884788C421E137D200AB138A /* CheckBox.swift in Sources */,
 				884AC09121C6A8F100B894AC /* HomeViewController.swift in Sources */,
 				884AC12E21CF3F0C00B894AC /* CameraViewController.swift in Sources */,
@@ -652,7 +656,7 @@
 				CODE_SIGN_IDENTITY = "iPhone Developer";
 				CODE_SIGN_STYLE = Automatic;
 				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
-				DEVELOPMENT_TEAM = S963R8VL5K;
+				DEVELOPMENT_TEAM = 2KD428X6J3;
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
 					"$(PROJECT_DIR)",
@@ -663,7 +667,7 @@
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
-				PRODUCT_BUNDLE_IDENTIFIER = "Sample-Collection";
+				PRODUCT_BUNDLE_IDENTIFIER = com.genomics.ViralFlex.test;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE_SPECIFIER = "";
 				SWIFT_VERSION = 4.2;
@@ -677,7 +681,7 @@
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_IDENTITY = "iPhone Developer";
 				CODE_SIGN_STYLE = Automatic;
-				DEVELOPMENT_TEAM = S963R8VL5K;
+				DEVELOPMENT_TEAM = 2KD428X6J3;
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
 					"$(PROJECT_DIR)",
@@ -688,7 +692,7 @@
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
-				PRODUCT_BUNDLE_IDENTIFIER = "Sample-Collection";
+				PRODUCT_BUNDLE_IDENTIFIER = com.genomics.ViralFlex.test;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE_SPECIFIER = "";
 				SWIFT_VERSION = 4.2;

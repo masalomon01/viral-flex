@@ -34,10 +34,16 @@
 	</dict>
 	<key>LSRequiresIPhoneOS</key>
 	<true/>
+	<key>NSAllowsArbitraryLoads</key>
+	<true/>
+	<key>NSAllowsArbitraryLoadsInWebContent</key>
+	<true/>
 	<key>NSCameraUsageDescription</key>
 	<string>Accept for scanning the barcode</string>
 	<key>NSPhotoLibraryUsageDescription</key>
 	<string>Accept for selecting a phone from your photo library</string>
+	<key>NSTemporaryExceptionAllowsInsecureHTTPLoads</key>
+	<true/>
 	<key>UILaunchStoryboardName</key>
 	<string>LaunchScreen</string>
 	<key>UIMainStoryboardFile</key>

@@ -60,15 +60,24 @@
                                     <action selector="onManageClicked:" destination="9pv-A4-QxB" eventType="touchUpInside" id="FtJ-00-KBl"/>
                                 </connections>
                             </button>
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="EjU-eR-XVJ">
+                                <rect key="frame" x="10" y="30" width="54" height="54"/>
+                                <state key="normal" image="helpicon"/>
+                                <connections>
+                                    <segue destination="FWR-zJ-bhG" kind="show" id="3un-WJ-mcV"/>
+                                </connections>
+                            </button>
                         </subviews>
                         <color key="backgroundColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                         <constraints>
                             <constraint firstItem="PQr-Ze-W5v" firstAttribute="trailing" secondItem="B0P-ET-Jyy" secondAttribute="trailing" constant="60" id="3U5-gf-O4F"/>
+                            <constraint firstItem="EjU-eR-XVJ" firstAttribute="top" secondItem="PQr-Ze-W5v" secondAttribute="top" constant="10" id="6qs-rG-9E1"/>
                             <constraint firstItem="PQr-Ze-W5v" firstAttribute="trailing" secondItem="vcU-71-77v" secondAttribute="trailing" constant="65" id="B2U-sg-Sio"/>
                             <constraint firstItem="uzd-UK-NgT" firstAttribute="leading" secondItem="PQr-Ze-W5v" secondAttribute="leading" constant="65" id="C1v-BC-Nkl"/>
                             <constraint firstItem="Xdm-pe-2GU" firstAttribute="leading" secondItem="PQr-Ze-W5v" secondAttribute="leading" constant="48" id="GFy-PS-2AA"/>
                             <constraint firstItem="05c-Jm-smb" firstAttribute="leading" secondItem="PQr-Ze-W5v" secondAttribute="leading" constant="65" id="LUf-iI-9Sw"/>
                             <constraint firstItem="PQr-Ze-W5v" firstAttribute="bottom" secondItem="qTz-Qv-Rdo" secondAttribute="bottom" constant="37" id="ODD-h4-X2i"/>
+                            <constraint firstItem="EjU-eR-XVJ" firstAttribute="leading" secondItem="PQr-Ze-W5v" secondAttribute="leading" constant="10" id="OiF-q9-kY1"/>
                             <constraint firstItem="Xdm-pe-2GU" firstAttribute="top" secondItem="PQr-Ze-W5v" secondAttribute="top" constant="36" id="hs7-zA-mmC"/>
                             <constraint firstItem="qTz-Qv-Rdo" firstAttribute="top" secondItem="05c-Jm-smb" secondAttribute="bottom" constant="18" id="isU-BY-7Ie"/>
                             <constraint firstItem="PQr-Ze-W5v" firstAttribute="trailing" secondItem="Xdm-pe-2GU" secondAttribute="trailing" constant="49" id="lCz-IF-Jyy" userLabel="Logo.right"/>
@@ -603,6 +612,55 @@
                 <placeholder placeholderIdentifier="IBFirstResponder" id="HXl-Hp-BGK" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
             <point key="canvasLocation" x="-730.39999999999998" y="1934.4827586206898"/>
+        </scene>
+        <!--Help View Controller-->
+        <scene sceneID="0UR-X5-gq6">
+            <objects>
+                <viewController id="FWR-zJ-bhG" customClass="HelpViewController" customModule="ViralFlex" customModuleProvider="target" sceneMemberID="viewController">
+                    <view key="view" contentMode="scaleToFill" id="N0v-Aw-4cn">
+                        <rect key="frame" x="0.0" y="0.0" width="414" height="736"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <navigationBar contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="9Ad-q6-oEI">
+                                <rect key="frame" x="0.0" y="20" width="414" height="44"/>
+                                <items>
+                                    <navigationItem id="TFa-n7-O0c">
+                                        <barButtonItem key="leftBarButtonItem" image="arrowLeft" id="aNQ-P2-BQU">
+                                            <connections>
+                                                <action selector="onBackClick:" destination="FWR-zJ-bhG" id="y7h-Sl-xAH"/>
+                                            </connections>
+                                        </barButtonItem>
+                                    </navigationItem>
+                                </items>
+                            </navigationBar>
+                            <wkWebView contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="rM6-Ih-T6d">
+                                <rect key="frame" x="0.0" y="64" width="414" height="672"/>
+                                <color key="backgroundColor" red="0.36078431370000003" green="0.38823529410000002" blue="0.4039215686" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                <wkWebViewConfiguration key="configuration">
+                                    <audiovisualMediaTypes key="mediaTypesRequiringUserActionForPlayback" none="YES"/>
+                                    <wkPreferences key="preferences"/>
+                                </wkWebViewConfiguration>
+                            </wkWebView>
+                        </subviews>
+                        <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                        <constraints>
+                            <constraint firstItem="rM6-Ih-T6d" firstAttribute="trailing" secondItem="6sl-oB-BOo" secondAttribute="trailing" id="08h-zR-lDl"/>
+                            <constraint firstItem="9Ad-q6-oEI" firstAttribute="leading" secondItem="6sl-oB-BOo" secondAttribute="leading" id="AdZ-gr-7A3"/>
+                            <constraint firstItem="9Ad-q6-oEI" firstAttribute="trailing" secondItem="6sl-oB-BOo" secondAttribute="trailing" id="IGI-5t-Rjz"/>
+                            <constraint firstItem="rM6-Ih-T6d" firstAttribute="leading" secondItem="6sl-oB-BOo" secondAttribute="leading" id="RGA-uR-7jm"/>
+                            <constraint firstItem="rM6-Ih-T6d" firstAttribute="top" secondItem="9Ad-q6-oEI" secondAttribute="bottom" id="WMT-md-93m"/>
+                            <constraint firstItem="rM6-Ih-T6d" firstAttribute="bottom" secondItem="6sl-oB-BOo" secondAttribute="bottom" id="rNh-nh-rL7"/>
+                            <constraint firstItem="9Ad-q6-oEI" firstAttribute="top" secondItem="6sl-oB-BOo" secondAttribute="top" id="zzo-Ah-uou"/>
+                        </constraints>
+                        <viewLayoutGuide key="safeArea" id="6sl-oB-BOo"/>
+                    </view>
+                    <connections>
+                        <outlet property="webView" destination="rM6-Ih-T6d" id="4b9-OP-qJk"/>
+                    </connections>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="pNI-aZ-Wzz" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="-155.07246376811597" y="1010.8695652173914"/>
         </scene>
         <!--Manage Tab View Controller-->
         <scene sceneID="0SF-6U-2ZX">
@@ -3300,38 +3358,39 @@ Vaccination</string>
         </scene>
     </scenes>
     <resources>
-        <image name="add" width="22.333333969116211" height="22.333333969116211"/>
+        <image name="add" width="22" height="22"/>
         <image name="addCircle" width="70" height="70"/>
         <image name="addCircleFill" width="40" height="40"/>
         <image name="addCircleWhite" width="70" height="70"/>
-        <image name="arrowDownUnselected" width="10.666666984558105" height="6"/>
+        <image name="arrowDownUnselected" width="10" height="6"/>
         <image name="arrowLeft" width="16" height="16"/>
-        <image name="arrowRight" width="6" height="10.666666984558105"/>
+        <image name="arrowRight" width="6" height="10"/>
         <image name="backgroundLogin" width="375" height="667"/>
         <image name="backgroundNewForm" width="375" height="667"/>
-        <image name="barCode" width="18.333333969116211" height="12"/>
+        <image name="barCode" width="18" height="12"/>
         <image name="buttonBlue" width="283" height="48"/>
         <image name="buttonOption" width="375" height="56"/>
-        <image name="buttonSubmitForm" width="122.66666412353516" height="44"/>
+        <image name="buttonSubmitForm" width="122" height="44"/>
         <image name="camera" width="59" height="44"/>
-        <image name="checkbox_checked" width="36" height="36"/>
+        <image name="checkbox_checked" width="48" height="48"/>
         <image name="circle" width="22" height="22"/>
         <image name="delete" width="59" height="44"/>
         <image name="download" width="27" height="32"/>
-        <image name="home" width="24.666666030883789" height="23.666666030883789"/>
+        <image name="helpicon" width="54" height="54"/>
+        <image name="home" width="24" height="23"/>
         <image name="homeCircleWhite" width="70" height="70"/>
-        <image name="image" width="15.333333015441895" height="12.333333015441895"/>
-        <image name="inputBarcode" width="24" height="19.333333969116211"/>
+        <image name="image" width="15" height="12"/>
+        <image name="inputBarcode" width="24" height="19"/>
         <image name="logo" width="284" height="190"/>
-        <image name="logoLogin" width="272" height="155.66667175292969"/>
-        <image name="manage" width="27" height="23.333333969116211"/>
+        <image name="logoLogin" width="272" height="155"/>
+        <image name="manage" width="27" height="23"/>
         <image name="manageCircle" width="70" height="70"/>
         <image name="option" width="4" height="22"/>
         <image name="save" width="59" height="44"/>
         <image name="scan" width="21" height="21"/>
-        <image name="scanningFocus" width="335.33334350585938" height="224"/>
+        <image name="scanningFocus" width="335" height="224"/>
         <image name="share" width="59" height="44"/>
-        <image name="titleLogo" width="36.333332061767578" height="35.666667938232422"/>
+        <image name="titleLogo" width="36" height="35"/>
         <image name="unchecked" width="16" height="16"/>
     </resources>
     <inferredMetricsTieBreakers>

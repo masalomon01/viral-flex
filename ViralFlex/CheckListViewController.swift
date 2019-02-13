@@ -221,7 +221,7 @@ class CheckListViewController: UIViewController, UITableViewDataSource, UITableV
         tableView.reloadData()
     }
     
-    func onDialogResult(_ newVaccination: Vaccination) {print(1234123412)
+    func onDialogResult(_ newVaccination: Vaccination) {
         
         if selected != nil {
             selectedResult[selected!] = newVaccination

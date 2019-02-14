@@ -5,6 +5,11 @@ class HelpViewController: UIViewController {
     
     @IBOutlet weak var webView: WKWebView!
     
+    
+    override var preferredStatusBarStyle: UIStatusBarStyle {
+        return .lightContent
+    }
+    
     override func viewDidLoad() {
         
         let preferences = WKPreferences()

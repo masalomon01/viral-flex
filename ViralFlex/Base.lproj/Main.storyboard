@@ -621,36 +621,60 @@
                         <rect key="frame" x="0.0" y="0.0" width="414" height="736"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
-                            <navigationBar contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="9Ad-q6-oEI">
-                                <rect key="frame" x="0.0" y="20" width="414" height="44"/>
-                                <items>
-                                    <navigationItem id="TFa-n7-O0c">
-                                        <barButtonItem key="leftBarButtonItem" image="arrowLeft" id="aNQ-P2-BQU">
-                                            <connections>
-                                                <action selector="onBackClick:" destination="FWR-zJ-bhG" id="y7h-Sl-xAH"/>
-                                            </connections>
-                                        </barButtonItem>
-                                    </navigationItem>
-                                </items>
-                            </navigationBar>
                             <wkWebView contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="rM6-Ih-T6d">
-                                <rect key="frame" x="0.0" y="64" width="414" height="672"/>
+                                <rect key="frame" x="0.0" y="120" width="414" height="616"/>
                                 <color key="backgroundColor" red="0.36078431370000003" green="0.38823529410000002" blue="0.4039215686" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                 <wkWebViewConfiguration key="configuration">
                                     <audiovisualMediaTypes key="mediaTypesRequiringUserActionForPlayback" none="YES"/>
                                     <wkPreferences key="preferences"/>
                                 </wkWebViewConfiguration>
                             </wkWebView>
+                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="K3V-0g-xDI" userLabel="titleBar">
+                                <rect key="frame" x="0.0" y="0.0" width="414" height="120"/>
+                                <subviews>
+                                    <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="titleLogo" translatesAutoresizingMaskIntoConstraints="NO" id="ffL-il-GW8">
+                                        <rect key="frame" x="187" y="32" width="40" height="40"/>
+                                        <constraints>
+                                            <constraint firstAttribute="height" constant="40" id="YUz-kb-Nch"/>
+                                            <constraint firstAttribute="width" constant="40" id="zGs-Yg-uoe"/>
+                                        </constraints>
+                                    </imageView>
+                                    <navigationBar contentMode="scaleToFill" fixedFrame="YES" translucent="NO" translatesAutoresizingMaskIntoConstraints="NO" id="9Ad-q6-oEI">
+                                        <rect key="frame" x="0.0" y="76" width="414" height="44"/>
+                                        <autoresizingMask key="autoresizingMask" widthSizable="YES" flexibleMaxY="YES"/>
+                                        <color key="tintColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                        <color key="barTintColor" red="0.0" green="0.2274509804" blue="0.74509803919999995" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                        <textAttributes key="titleTextAttributes">
+                                            <color key="textColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                        </textAttributes>
+                                        <items>
+                                            <navigationItem title="Tutorials" id="TFa-n7-O0c">
+                                                <barButtonItem key="leftBarButtonItem" image="arrowLeft" id="aNQ-P2-BQU">
+                                                    <connections>
+                                                        <action selector="onBackClick:" destination="FWR-zJ-bhG" id="y7h-Sl-xAH"/>
+                                                    </connections>
+                                                </barButtonItem>
+                                            </navigationItem>
+                                        </items>
+                                    </navigationBar>
+                                </subviews>
+                                <color key="backgroundColor" red="0.0" green="0.2274509804" blue="0.74509803919999995" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                <constraints>
+                                    <constraint firstItem="ffL-il-GW8" firstAttribute="centerX" secondItem="K3V-0g-xDI" secondAttribute="centerX" id="AzH-rs-fZd"/>
+                                    <constraint firstItem="ffL-il-GW8" firstAttribute="top" secondItem="K3V-0g-xDI" secondAttribute="top" constant="32" id="DsG-SN-5aK"/>
+                                    <constraint firstAttribute="height" constant="120" id="cLQ-AU-JwF"/>
+                                </constraints>
+                            </view>
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                         <constraints>
                             <constraint firstItem="rM6-Ih-T6d" firstAttribute="trailing" secondItem="6sl-oB-BOo" secondAttribute="trailing" id="08h-zR-lDl"/>
-                            <constraint firstItem="9Ad-q6-oEI" firstAttribute="leading" secondItem="6sl-oB-BOo" secondAttribute="leading" id="AdZ-gr-7A3"/>
-                            <constraint firstItem="9Ad-q6-oEI" firstAttribute="trailing" secondItem="6sl-oB-BOo" secondAttribute="trailing" id="IGI-5t-Rjz"/>
                             <constraint firstItem="rM6-Ih-T6d" firstAttribute="leading" secondItem="6sl-oB-BOo" secondAttribute="leading" id="RGA-uR-7jm"/>
-                            <constraint firstItem="rM6-Ih-T6d" firstAttribute="top" secondItem="9Ad-q6-oEI" secondAttribute="bottom" id="WMT-md-93m"/>
+                            <constraint firstItem="K3V-0g-xDI" firstAttribute="top" secondItem="N0v-Aw-4cn" secondAttribute="top" id="ZkT-Xf-vtm"/>
+                            <constraint firstItem="K3V-0g-xDI" firstAttribute="leading" secondItem="6sl-oB-BOo" secondAttribute="leading" id="gyj-ib-Axh"/>
+                            <constraint firstItem="rM6-Ih-T6d" firstAttribute="top" secondItem="K3V-0g-xDI" secondAttribute="bottom" id="kK3-fU-DZl"/>
+                            <constraint firstItem="K3V-0g-xDI" firstAttribute="trailing" secondItem="6sl-oB-BOo" secondAttribute="trailing" id="oEG-fS-nba"/>
                             <constraint firstItem="rM6-Ih-T6d" firstAttribute="bottom" secondItem="6sl-oB-BOo" secondAttribute="bottom" id="rNh-nh-rL7"/>
-                            <constraint firstItem="9Ad-q6-oEI" firstAttribute="top" secondItem="6sl-oB-BOo" secondAttribute="top" id="zzo-Ah-uou"/>
                         </constraints>
                         <viewLayoutGuide key="safeArea" id="6sl-oB-BOo"/>
                     </view>
@@ -1678,7 +1702,7 @@
                                         <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                         <textInputTraits key="textInputTraits"/>
                                         <userDefinedRuntimeAttributes>
-                                            <userDefinedRuntimeAttribute type="string" keyPath="fieldName" value="In Ovo Vaccinator"/>
+                                            <userDefinedRuntimeAttribute type="string" keyPath="fieldName" value="In Ovo Machine"/>
                                         </userDefinedRuntimeAttributes>
                                     </textField>
                                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Subcutaneous Vaccinator" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="BYa-pb-rnO" userLabel="label13">
@@ -1693,7 +1717,7 @@
                                         <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                         <textInputTraits key="textInputTraits"/>
                                         <userDefinedRuntimeAttributes>
-                                            <userDefinedRuntimeAttribute type="string" keyPath="fieldName" value="Hatcher Vaccinator"/>
+                                            <userDefinedRuntimeAttribute type="string" keyPath="fieldName" value="Subcutaneous Vaccinator"/>
                                         </userDefinedRuntimeAttributes>
                                     </textField>
                                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Lab Reference Number" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="K97-A8-MSK" userLabel="label14">

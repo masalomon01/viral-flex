@@ -94,17 +94,17 @@ class NewFormViewController: UIViewController, UITabBarDelegate, UITextFieldDele
         if pictureCount == 0 {(tabBar.items![1] ).badgeValue = nil}
         else {(tabBar.items![1] ).badgeValue = String(pictureCount)}
         
-        
-        clinicalContainer.subviews.forEach({ $0.removeFromSuperview() })
-        for name in form.clinicalSigns {
-            addClinical(name: name)
+        if (viewMode) {
+            clinicalContainer.subviews.forEach({ $0.removeFromSuperview() })
+            for name in form.clinicalSigns {
+                addClinical(name: name)
+            }
+            
+            vaccinationContainer.subviews.forEach({ $0.removeFromSuperview() })
+            for vaccination in form.vaccinations {
+                addVaccination(vaccination)
+            }
         }
-        
-        vaccinationContainer.subviews.forEach({ $0.removeFromSuperview() })
-        for vaccination in form.vaccinations {
-            addVaccination(vaccination)
-        }
-        
         
         validate()
     }
@@ -285,6 +285,8 @@ class NewFormViewController: UIViewController, UITabBarDelegate, UITextFieldDele
             self.textField15.text = ""
             self.textField16.text = ""
             self.textField17.text = ""
+            self.form.clinicalSigns = []
+            self.form.vaccinations = []
         }
         alertController.addAction(clear)
         
@@ -375,6 +377,7 @@ class NewFormViewController: UIViewController, UITabBarDelegate, UITextFieldDele
                 let alertController = UIAlertController(title: "Delete this?", message: "Deleting this cannot be undone.", preferredStyle: .alert)
                 
                 alertController.addAction(UIAlertAction(title: "Delete", style: .default) { (action) in
+                    self.form.delete()
                     self.dismiss(animated: true, completion: nil)
                 })
                 alertController.addAction(UIAlertAction(title: "Cancel", style: .cancel) { (action) in })

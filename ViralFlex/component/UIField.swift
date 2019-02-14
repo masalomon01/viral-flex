@@ -75,7 +75,15 @@ import UIKit
             dialog.pickerTitle.text = fieldName
             dialog.textTitle.text = fieldName
         }
-        if (pickerData != nil) {dialog.pickerData = pickerData!}
+        if (pickerData != nil) {
+            dialog.pickerData = pickerData!
+            
+            DispatchQueue.main.asyncAfter(deadline: .now() + 0.1, execute: {
+                if let index = self.pickerData?.firstIndex(of: self.text!) {
+                    dialog.picker.selectRow(index, inComponent: 0, animated: true)
+                }
+            })
+        }
     }
     
     override func gestureRecognizerShouldBegin(_ gestureRecognizer: UIGestureRecognizer) -> Bool {

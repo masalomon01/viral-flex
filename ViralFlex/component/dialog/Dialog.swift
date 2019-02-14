@@ -57,6 +57,7 @@ class Dialog: UIView, UIPickerViewDelegate, UIPickerViewDataSource {
         super.init(coder: aDecoder)
     }
     
+    
     func setup(_ dialogType: Int) {
         self.dialogType = dialogType
         let index = dialogType == 0 ? dialogType:(dialogType - 1)
@@ -151,6 +152,7 @@ class Dialog: UIView, UIPickerViewDelegate, UIPickerViewDataSource {
             delegate?.onDialogResult(text: textView.text)
         }
         else if dialogType == Dialog.TYPE_PICKER {
+            self.text = pickerData[picker.selectedRow(inComponent: 0)]
             delegate?.onDialogResult(text: self.text)
         }
         else {
@@ -193,7 +195,7 @@ class Dialog: UIView, UIPickerViewDelegate, UIPickerViewDataSource {
     }
     
     func pickerView(_ pickerView: UIPickerView, didSelectRow row: Int, inComponent component: Int) {
-        self.text = pickerData[row]
+        
     }
 }
 

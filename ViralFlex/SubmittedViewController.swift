@@ -15,7 +15,7 @@ class SubmittedViewController: UIViewController, FolderSelectDelegate, ItemClick
         }
     }
     
-    func onItemClick(sender: FormTableViewCell, position: Int) {print(12342134)
+    func onItemClick(sender: FormTableViewCell, position: Int) {
         
         let form = tableViewController.forms[position]
         

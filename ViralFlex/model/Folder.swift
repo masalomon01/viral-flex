@@ -81,13 +81,17 @@ class Folder: NSObject, NSCoding {
     
     
     func addForm(form: Form) {
+        removeForm(form: form)
+        formsID.append(form.uuid)
+        saveChanges()
+    }
+    
+    func removeForm(form: Form) {
         for folder in Folder.loadFolders() {
             if (folder.formsID.contains(form.uuid)) {
                 folder.formsID.remove(at: folder.formsID.firstIndex(of: form.uuid)!)
             }
         }
-        formsID.append(form.uuid)
-        saveChanges()
     }
     
     func getForms(type: String) -> [Form] {

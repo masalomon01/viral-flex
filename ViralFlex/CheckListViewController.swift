@@ -200,10 +200,10 @@ class CheckListViewController: UIViewController, UITableViewDataSource, UITableV
             selected = nil
             let index = selectedResult.firstIndex(where: { ($0 as! Vaccination).uuid == (selectedItem as! Vaccination).uuid})
             
-            if !(checkBox?.isSelected)! {print(111111)
+            if !(checkBox?.isSelected)! {
                 selectedResult.remove(at: index!)
             }
-            else if index == nil {print(111112)
+            else if index == nil {
                 selectedResult.append(selectedItem)
                 selected = selectedResult.count - 1
             }
@@ -212,7 +212,6 @@ class CheckListViewController: UIViewController, UITableViewDataSource, UITableV
             }
         }
         
-        print(selectedResult)
     }
     
     @IBAction func onAddSymptomClick() {

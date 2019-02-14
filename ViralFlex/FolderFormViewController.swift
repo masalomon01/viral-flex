@@ -1,12 +1,14 @@
 import UIKit
 
-class FolderFormViewController: UIViewController, UITableViewDataSource, UITableViewDelegate, UITabBarDelegate, FolderSelectDelegate {
+class FolderFormViewController: UIViewController, UITableViewDataSource, UITableViewDelegate, UITabBarDelegate, FolderSelectDelegate, SubmitDialogDelegate {
     
     
     @IBOutlet weak var navigationBar: UINavigationBar!
     @IBOutlet weak var tabBar: UITabBar!
     @IBOutlet weak var tableView: UITableView!
     @IBOutlet weak var checkBox: CheckBox!
+    @IBOutlet weak var selectionNavigation: UIView!
+    @IBOutlet weak var buttonMenu: UIView!
     
     
     var folder: Folder!
@@ -91,6 +93,15 @@ class FolderFormViewController: UIViewController, UITableViewDataSource, UITable
         tableView.reloadData()
     }
     
+    func getSelectedForms() -> [Form] {
+        
+        let array = NSMutableArray()
+        for (index, cell) in tableView.visibleCells.enumerated() {
+            if (cell as! FolderFormTableViewCell).checkBox.isSelected {array.add(forms[index])}
+        }
+        return array.copy() as! [Form]
+    }
+    
     @IBAction func onBackClick(_ sender: Any) {
         dismiss(animated: true, completion: nil)
     }
@@ -99,7 +110,15 @@ class FolderFormViewController: UIViewController, UITableViewDataSource, UITable
         dismiss(animated: true, completion: nil)
     }
     
-    @IBAction func onSelectAllClick(_ sender: CheckBox) {
+    @IBAction func onSelectAllClick(_ sender: Any) {
+        checkBox.isSelected = false
+        onHeaderCheckBoxClick(checkBox)
+    }
+    @IBAction func onCancelClick(_ sender: Any) {
+        checkBox.isSelected = true
+        onHeaderCheckBoxClick(checkBox)
+    }
+    @IBAction func onHeaderCheckBoxClick(_ sender: CheckBox) {
         if (sender.isSelected) {
             sender.setSelected(selected: false)
             for cell in tableView.visibleCells {
@@ -112,21 +131,107 @@ class FolderFormViewController: UIViewController, UITableViewDataSource, UITable
                 (cell as! FolderFormTableViewCell).checkBox.isSelected = true
             }
         }
+        selectedForm = nil
+        
+        selectionNavigation.isHidden = getSelectedForms().count == 0
+        buttonMenu.isHidden = getSelectedForms().count == 0
+    }
+    
+    @IBAction func onSubmitClick(_ sender: Any) {
+        
+        let forms = getSelectedForms()
+        
+        var unsubmitted: String = ""
+        for form in forms {
+            if (form.testType == nil || form.farmName == nil || form.country == nil || form.birdType == nil || form.barCodes.count == 0) {
+                unsubmitted += "\n" + form.name
+            }
+        }
+        
+        if (unsubmitted != "") {
+            
+            let alert = UIAlertController(title: "Submission Error", message: "You are attempting to Submit multiple Draft Forms. However, the following Forms do not have all the required fields completed:" + unsubmitted, preferredStyle: .alert)
+            alert.addAction(UIAlertAction(title: "Dismiss", style: .cancel, handler: nil))
+            //alert.addAction(UIAlertAction(title: "Next", style: .default, handler: nil))
+            self.present(alert, animated: true, completion: nil)
+        }
+        else {
+            var formNames: String = ""
+            for form in forms {
+                if formNames.isEmpty {
+                    formNames = form.name
+                } else {
+                    formNames += ", \(form.name)"
+                }
+            }
+            let dialog = SubmitDialog()
+            dialog.delegate = self
+            dialog.setup()
+            dialog.show()
+            dialog.formName.text = formNames
+        }
+    }
+    
+    @IBAction func onMoveToFolderClick(_ sender: Any) {
+        
+        if let controller = self.storyboard?.instantiateViewController(withIdentifier: "addToFolderViewController") {
+            (controller as! AddToFolderViewController).folderSelectDelegate = self
+            self.present(controller, animated: true, completion: nil)
+        }
+    }
+    
+    @IBAction func onDeleteClick(_ sender: Any) {
+        
+        let title = "Delete this?"
+        let message = "Deleting this cannot be undone."
+        let alertController = UIAlertController(title: title, message: message, preferredStyle: .alert)
+        
+        alertController.addAction(UIAlertAction(title: "Cancel", style: .default) { (action) in })
+        alertController.addAction(UIAlertAction(title: "Delete", style: .destructive) { (action) in
+            
+            let forms = self.getSelectedForms()
+            for form in forms {
+                self.folder.removeForm(form: form)
+                form.delete()
+            }
+            
+            self.tableView.reloadData()
+            
+            self.checkBox.isSelected = true
+            self.onHeaderCheckBoxClick(self.checkBox)
+        })
+        
+        self.present(alertController, animated: true)
     }
     
     @IBAction func onItemClick(_ sender: UITapGestureRecognizer) {
-        onCheckBoxClick((sender.view as! FolderFormTableViewCell).checkBox)
+        
+        if type == "draft" {
+            onCheckBoxClick((sender.view as! FolderFormTableViewCell).checkBox)
+        }
+        else {
+            let form = forms[(sender.view as! FolderFormTableViewCell).tag]
+            
+            if let controller = self.storyboard?.instantiateViewController(withIdentifier: "newFormViewController") {
+                (controller as! NewFormViewController).form = form
+                (controller as! NewFormViewController).viewMode = true
+                self.present(controller, animated: true, completion: nil)
+            }
+        }
     }
     
     @IBAction func onCheckBoxClick(_ sender: CheckBox) {
 //        toggleSelectionMenu(visible: tableViewController.getSelectedForms().count == 0)
         sender.setSelected(selected: !sender.isSelected)
+        
+        selectionNavigation.isHidden = getSelectedForms().count == 0
+        buttonMenu.isHidden = getSelectedForms().count == 0
     }
     
     
     @IBAction func onOptionClick(_ sender: UIButton) {
         
-        let position = sender.tag
+        let position = sender.superview!.superview!.tag
         let form = Form.getDraftForms()[position]
         
         let alertController = UIAlertController(title: nil, message: nil, preferredStyle: .actionSheet)
@@ -218,18 +323,24 @@ class FolderFormViewController: UIViewController, UITableViewDataSource, UITable
     func onFolderSelect(folder: Folder) {
         
         var forms: [Form]
-        forms = [selectedForm!]
-        //        if (selectedForm != nil) {forms = [selectedForm!]}
-        //        else {forms = self.tableViewController.getSelectedForms()}
+        if (selectedForm != nil) {forms = [selectedForm!]}
+        else {forms = self.getSelectedForms()}
         
         for form in forms {
             folder.addForm(form: form)
         }
         tableView.reloadData()
         
-        //        checkBox.isSelected = false
-        //        tableViewController.deselectAll()
-        //        toggleSelectionMenu(visible: true)
+        checkBox.isSelected = true
+        onHeaderCheckBoxClick(checkBox)
+    }
+    
+    func onSubmit(dialog: SubmitDialog, pin: Int) {
+        
+        self.tableView.reloadData()
+        
+        self.checkBox.isSelected = true
+        self.onHeaderCheckBoxClick(self.checkBox)
     }
 }
 

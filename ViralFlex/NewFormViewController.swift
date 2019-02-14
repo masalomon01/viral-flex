@@ -215,11 +215,9 @@ class NewFormViewController: UIViewController, UITabBarDelegate, UITextFieldDele
     
     func onCheckListSelect(_ type: String, _ selected: [Any]) {
         if type == "clinical" {
-            print(333)
             form.clinicalSigns = selected as! [String]
         }
         else {
-            print(444)
             form.vaccinations = selected as! [Vaccination]
             for vaccination in form.vaccinations {
                 print(vaccination.uuid)

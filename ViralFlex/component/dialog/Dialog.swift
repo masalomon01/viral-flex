@@ -157,8 +157,10 @@ class Dialog: UIView, UIPickerViewDelegate, UIPickerViewDataSource {
         }
         else {
             
-            if (textFieldTitle.text != "") {labelDialogTitle.text = textFieldTitle.text}
-            vaccination?.name = labelDialogTitle.text
+            if (textFieldTitle.text != "") {
+                labelDialogTitle.text = textFieldTitle.text
+                vaccination?.name = labelDialogTitle.text
+            }
             vaccination?.age = Int(textAge.text!)
             vaccination?.doses = Int(textDoses.text!)
             vaccination?.admin = textAdmin.text

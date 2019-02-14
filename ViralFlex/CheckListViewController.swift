@@ -115,8 +115,9 @@ class CheckListViewController: UIViewController, UITableViewDataSource, UITableV
         else {
             var vaccination = item as! Vaccination
             for selected in selectedResult {
-                if (selected as! Vaccination).name == vaccination.name.replacingOccurrences(of: "\n", with: " ") {
+                if (selected as! Vaccination).name.replacingOccurrences(of: "\n", with: " ") == vaccination.name.replacingOccurrences(of: "\n", with: " ") {
                     vaccination = selected as! Vaccination
+                    row![indexPath.section][indexPath.row] = vaccination
                     cell.checkBox.isSelected = true
                 }
             }
@@ -128,31 +129,51 @@ class CheckListViewController: UIViewController, UITableViewDataSource, UITableV
             if vaccination.brand != nil {cell.labelBrand.text = vaccination.brand!}
         }
         
-        let tap: UITapGestureRecognizer = UITapGestureRecognizer(target: self, action: #selector(onCelClick))
-        cell.addGestureRecognizer(tap)
+        cell.addGestureRecognizer(UITapGestureRecognizer(target: self, action: #selector(onCelClick)))
+        cell.checkBox.addGestureRecognizer(UITapGestureRecognizer(target: self, action: #selector(onCelClick)))
         
         return cell
     }
     
     @IBAction func onBackClick(_ sender: Any) {
-        self.dismiss(animated: true, completion: nil)
+        
+        let title = "Are you sure?"
+        let message = "Going back will empty your selections."
+        let alertController = UIAlertController(title: title, message: message, preferredStyle: .alert)
+        
+        alertController.addAction(UIAlertAction(title: "Cancel", style: .default) { (action) in })
+        
+        alertController.addAction(UIAlertAction(title: "Discard", style: .destructive) { (action) in
+            self.dismiss(animated: true, completion: nil)
+        })
+        
+        self.present(alertController, animated: true)
     }
     
     @IBAction func onDoneClick(_ sender: Any) {
-        checkListSelectDelegate?.onCheckListSelect(selectedResult)
-        //dismiss(animated: true, completion: nil)
+        checkListSelectDelegate?.onCheckListSelect(section != nil ? "vaccination":"clinical", selectedResult)
         self.dismiss(animated: true, completion: nil)
     }
     
     @IBAction func onCelClick(_ sender: UIGestureRecognizer) {
         
-        let cell = sender.view as? CheckListViewTableCell
-        let selectedItem = row![(cell?.section!)!][(cell?.row!)!]
+        var cell: CheckListViewTableCell
+        if sender.view is CheckListViewTableCell {
+            cell = sender.view as! CheckListViewTableCell
+        }
+        else {
+            cell = (sender.view as! CheckBox).superview?.superview as! CheckListViewTableCell
+        }
         
-        let checkBox = (sender.view as! CheckListViewTableCell).checkBox
+        let selectedItem = row![(cell.section!)][(cell.row!)]
+        
+        let checkBox = cell.checkBox
         
         if section == nil {
             checkBox?.setSelected(selected: !(checkBox?.isSelected)!)
+        }
+        else if (checkBox?.isSelected)! && !(sender.view is CheckListViewTableCell) {
+            checkBox?.setSelected(selected: false)
         }
         else {
             checkBox?.setSelected(selected: true)
@@ -179,7 +200,10 @@ class CheckListViewController: UIViewController, UITableViewDataSource, UITableV
             selected = nil
             let index = selectedResult.firstIndex(where: { ($0 as! Vaccination).uuid == (selectedItem as! Vaccination).uuid})
             
-            if index == nil {
+            if !(checkBox?.isSelected)! {print(111111)
+                selectedResult.remove(at: index!)
+            }
+            else if index == nil {print(111112)
                 selectedResult.append(selectedItem)
                 selected = selectedResult.count - 1
             }
@@ -187,6 +211,8 @@ class CheckListViewController: UIViewController, UITableViewDataSource, UITableV
                 selected = index
             }
         }
+        
+        print(selectedResult)
     }
     
     @IBAction func onAddSymptomClick() {
@@ -273,5 +299,5 @@ class CheckListViewCellClear: UITableViewCell {
 
 protocol CheckListSelectDelegate {
     
-    func onCheckListSelect(_ selected: [Any])
+    func onCheckListSelect(_ type: String, _ selected: [Any])
 }

@@ -117,16 +117,17 @@ class CheckListViewController: UIViewController, UITableViewDataSource, UITableV
             for selected in selectedResult {
                 if (selected as! Vaccination).name.replacingOccurrences(of: "\n", with: " ") == vaccination.name.replacingOccurrences(of: "\n", with: " ") {
                     vaccination = selected as! Vaccination
-                    row![indexPath.section][indexPath.row] = vaccination
+//                    row![indexPath.section][indexPath.row] = vaccination
                     cell.checkBox.isSelected = true
+                    
+                    if vaccination.age != nil {cell.labelAge.text = String(vaccination.age!)}
+                    if vaccination.doses != nil {cell.labelDoses.text = String(vaccination.doses!)}
+                    if vaccination.admin != nil {cell.labelAdmin.text = vaccination.admin!}
+                    if vaccination.brand != nil {cell.labelBrand.text = vaccination.brand!}
                 }
             }
             
             cell.label.text = vaccination.name
-            if vaccination.age != nil {cell.labelAge.text = String(vaccination.age!)}
-            if vaccination.doses != nil {cell.labelDoses.text = String(vaccination.doses!)}
-            if vaccination.admin != nil {cell.labelAdmin.text = vaccination.admin!}
-            if vaccination.brand != nil {cell.labelBrand.text = vaccination.brand!}
         }
         
         cell.addGestureRecognizer(UITapGestureRecognizer(target: self, action: #selector(onCellClick)))
@@ -174,10 +175,6 @@ class CheckListViewController: UIViewController, UITableViewDataSource, UITableV
         }
         else if (checkBox?.isSelected)! && !(sender.view is CheckListViewTableCell) {
             checkBox?.setSelected(selected: false)
-            cell.labelAge.text = ""
-            cell.labelDoses.text = ""
-            cell.labelAdmin.text = ""
-            cell.labelBrand.text = ""
         }
         else {
             checkBox?.setSelected(selected: true)
@@ -205,7 +202,13 @@ class CheckListViewController: UIViewController, UITableViewDataSource, UITableV
             let index = selectedResult.firstIndex(where: { ($0 as! Vaccination).uuid == (selectedItem as! Vaccination).uuid})
             
             if !(checkBox?.isSelected)! {
+                
+                (row![(cell.section!)][(cell.row!)] as! Vaccination).age = nil
+                (row![(cell.section!)][(cell.row!)] as! Vaccination).doses = nil
+                (row![(cell.section!)][(cell.row!)] as! Vaccination).admin = nil
+                (row![(cell.section!)][(cell.row!)] as! Vaccination).brand = nil
                 selectedResult.remove(at: index!)
+                tableView.reloadData()
             }
             else if index == nil {
                 selectedResult.append(selectedItem)
@@ -254,14 +257,6 @@ class CheckListViewController: UIViewController, UITableViewDataSource, UITableV
         
         if selected != nil {
             selectedResult[selected!] = newVaccination
-            
-            for (i, section) in row!.enumerated() {
-                for (j, vaccination) in (section as! [Vaccination]).enumerated() {
-                    if vaccination.uuid == newVaccination.uuid {
-                        row![i][j] = newVaccination
-                    }
-                }
-            }
         }
         else {
             

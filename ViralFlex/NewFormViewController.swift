@@ -490,7 +490,7 @@ class NewFormViewController: UIViewController, UITabBarDelegate, UITextFieldDele
         for (i, section) in vaccinationRow.enumerated() {
             for item in section {
                 
-                if let sectionName = view.viewWithTag(1), item.name.replacingOccurrences(of: "\n", with: " ") == vaccination.name {
+                if let sectionName = view.viewWithTag(1), item.name.replacingOccurrences(of: "\n", with: " ") == vaccination.name.replacingOccurrences(of: "\n", with: " ") {
                     (sectionName as! UILabel).text = vaccinationSection[i]
                     break;
                 }

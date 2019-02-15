@@ -336,10 +336,47 @@ class FolderFormViewController: UIViewController, UITableViewDataSource, UITable
     
     func onSubmit(dialog: SubmitDialog, pin: Int) {
         
-        self.tableView.reloadData()
-        
-        self.checkBox.isSelected = true
-        self.onHeaderCheckBoxClick(self.checkBox)
+        let forms = getSelectedForms()
+        var status: Int = 0
+        dialog.labelError.isHidden = true
+        let myGroup = DispatchGroup()
+        for form in forms {
+            myGroup.enter()
+            HttpRequest.submitForm(form, pin: pin, onRequestSuccess: {response in
+                print(response.statusCode)
+                status = response.statusCode
+                form.submit()
+                myGroup.leave()
+            }, onRequestFailed: {response in
+                print(response.statusCode)
+                status = response.statusCode
+                myGroup.leave()
+            })
+        }
+        myGroup.notify(queue: .main) {
+            print("Finished all requests.")
+            if status == 200{
+                if let controller = self.storyboard?.instantiateViewController(withIdentifier: "submitSuccessViewController") {
+                    (controller as! SubmitSuccessViewController).previousViewController = self
+                    self.present(controller, animated: true, completion: nil)
+                }
+            }
+            else {
+                if status == 401 {
+                    dialog.labelError.isHidden = false
+                }
+                else {
+                    let errorDialog = ErrorDialog()
+                    errorDialog.setup()
+                    errorDialog.show()
+                }
+            }
+            
+            self.tableView.reloadData()
+            
+            self.checkBox.isSelected = true
+            self.onHeaderCheckBoxClick(self.checkBox)
+        }
     }
 }
 

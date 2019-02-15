@@ -64,6 +64,9 @@ class FolderFormViewController: UIViewController, UITableViewDataSource, UITable
         let cell = tableView.dequeueReusableCell(withIdentifier: "row", for: indexPath) as! FolderFormTableViewCell
         cell.label.text = form.name
         
+        cell.barcodeCount.text = String(form.barCodes.count)
+        cell.pictureCount.text = String(form.pictures.count)
+        
         cell.options.addTarget(self, action: #selector(onOptionClick), for: .touchUpInside)
         cell.options.isHidden = (type == "submitted")
         
@@ -346,5 +349,7 @@ class FolderFormTableViewCell: UITableViewCell {
     @IBOutlet weak var checkBox: CheckBox!
     @IBOutlet weak var label: UILabel!
     @IBOutlet weak var time: UILabel!
+    @IBOutlet weak var pictureCount: UILabel!
+    @IBOutlet weak var barcodeCount: UILabel!
     @IBOutlet weak var options: UIButton!
 }

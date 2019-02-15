@@ -29,9 +29,11 @@ class CameraView: UIView, UIImagePickerControllerDelegate, UINavigationControlle
         let name = "\(interval).jpg"
         let url = docUrl?.appendingPathComponent(name)
         let data = image.jpegData(compressionQuality: 0.9)
-        try! data?.write(to: url!)
+//        try! data?.write(to: url!)
         
-        form.pictures.append((url?.path)!)
+        fileManager.createFile(atPath: (url?.path)!, contents: data, attributes: nil)
+        
+        form.pictures.append(name)
         
 
         imagePickerController.dismiss(animated: false, completion: nil)

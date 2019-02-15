@@ -24,6 +24,8 @@ class FormTableViewController: UITableViewController, UIActionSheetDelegate {
         if (type==Form.TYPE_DRAFT) {forms = Form.getDraftForms()}
         else {forms = Form.getSubmittedForms()}
         tableView.reloadData()
+        print("size")
+        print(forms.count)
     }
     
     func sort(by field: Int) {

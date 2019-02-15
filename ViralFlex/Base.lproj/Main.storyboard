@@ -2212,7 +2212,7 @@ Submitted</string>
                                                         <action selector="onSelectAllClick:" destination="Hja-Ur-BWP" eventType="touchUpInside" id="3T5-Uq-AIb"/>
                                                     </connections>
                                                 </button>
-                                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="natural" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="gGv-df-HM4">
+                                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="natural" lineBreakMode="tailTruncation" numberOfLines="2" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="gGv-df-HM4">
                                                     <rect key="frame" x="64" y="22" width="33" height="15.666666666666664"/>
                                                     <fontDescription key="fontDescription" type="system" pointSize="13"/>
                                                     <nil key="textColor"/>
@@ -2266,6 +2266,7 @@ Submitted</string>
                                                 <constraint firstAttribute="trailing" secondItem="duO-3V-lrd" secondAttribute="trailing" constant="20" symbolic="YES" id="TxQ-yn-48s"/>
                                                 <constraint firstItem="QcN-r4-bal" firstAttribute="leading" secondItem="Jwl-Kv-o4i" secondAttribute="leading" constant="20" symbolic="YES" id="am3-FC-gn4"/>
                                                 <constraint firstItem="8Ni-q6-P1e" firstAttribute="centerY" secondItem="Jwl-Kv-o4i" secondAttribute="centerY" id="hfN-lo-pQQ"/>
+                                                <constraint firstItem="gGv-df-HM4" firstAttribute="trailing" relation="lessThanOrEqual" secondItem="GoR-Tm-PjP" secondAttribute="leading" id="tqv-2s-RYX"/>
                                                 <constraint firstItem="sUa-eU-BUT" firstAttribute="leading" secondItem="GoR-Tm-PjP" secondAttribute="trailing" constant="8" symbolic="YES" id="uV0-Zu-5K3"/>
                                                 <constraint firstItem="QcN-r4-bal" firstAttribute="centerY" secondItem="Jwl-Kv-o4i" secondAttribute="centerY" id="vcg-i2-pxJ"/>
                                             </constraints>
@@ -3252,9 +3253,11 @@ Vaccination</string>
                                         </tableViewCellContentView>
                                         <gestureRecognizers/>
                                         <connections>
+                                            <outlet property="barcodeCount" destination="U3B-tQ-5jq" id="4kJ-6G-8Ks"/>
                                             <outlet property="checkBox" destination="YA7-9F-5f8" id="Jzd-KU-qau"/>
                                             <outlet property="label" destination="Ng2-fM-FFX" id="Quu-x5-VWf"/>
                                             <outlet property="options" destination="q20-SX-FX7" id="jqw-X3-77b"/>
+                                            <outlet property="pictureCount" destination="Wu3-Mj-KjI" id="7gZ-q6-Umt"/>
                                             <outlet property="time" destination="diL-b1-ISC" id="Zfl-kU-Z3q"/>
                                         </connections>
                                     </tableViewCell>
@@ -3375,7 +3378,7 @@ Vaccination</string>
                                     <constraint firstAttribute="height" constant="205" id="LLG-dG-NgK"/>
                                 </constraints>
                             </view>
-                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="Okg-tf-cWd" userLabel="bottomMenu">
+                            <view hidden="YES" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="Okg-tf-cWd" userLabel="bottomMenu">
                                 <rect key="frame" x="0.0" y="686" width="414" height="50"/>
                                 <subviews>
                                     <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="kCT-GZ-Hr7" userLabel="submit">

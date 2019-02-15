@@ -60,7 +60,11 @@ class BarcodePictureViewController: UIViewController, UITableViewDataSource, UIT
         
         selectedPicture = sender.view!.tag
         layoutPreview.isHidden = false
-        imagePreview.image = UIImage(contentsOfFile: form.pictures[sender.view!.tag])
+        
+        let directoryURL: URL = FileManager.default.urls(for: .documentDirectory, in: .userDomainMask)[0]
+        let fileURL: URL = directoryURL.appendingPathComponent(form.pictures[selectedPicture!])
+        
+        imagePreview.image = UIImage(contentsOfFile: fileURL.path)
     }
     
     
@@ -98,18 +102,20 @@ class BarcodePictureViewController: UIViewController, UITableViewDataSource, UIT
         else {
             cell = tableView.dequeueReusableCell(withIdentifier: "imageRow", for: indexPath) as! BarcodePicktureTableCell
             
-            let url = NSURL(fileURLWithPath: form.pictures[indexPath.row*4])
-            cell.image1.image = UIImage(contentsOfFile: url.path!)
+            let directoryURL: URL = FileManager.default.urls(for: .documentDirectory, in: .userDomainMask)[0]
+            let fileURL: URL = directoryURL.appendingPathComponent(form.pictures[indexPath.row*4])
+            
+            cell.image1.image = UIImage(contentsOfFile: fileURL.path)
             cell.image1.tag = indexPath.row*4
             cell.image1.addGestureRecognizer(UITapGestureRecognizer(target: self, action: #selector(onImageItemClick)))
-            cell.name1.text = url.lastPathComponent
+            cell.name1.text = fileURL.lastPathComponent
             
             if (indexPath.row*4+1 < form.pictures.count) {
-                let url = NSURL(fileURLWithPath: form.pictures[indexPath.row*4+1])
+                let fileURL: URL = directoryURL.appendingPathComponent(form.pictures[indexPath.row*4+1])
                 cell.image2.tag = indexPath.row*4+1
-                cell.image2.image = UIImage(contentsOfFile: url.path!)
+                cell.image2.image = UIImage(contentsOfFile: fileURL.path)
                 cell.image2.addGestureRecognizer(UITapGestureRecognizer(target: self, action: #selector(onImageItemClick)))
-                cell.name2.text = url.lastPathComponent
+                cell.name2.text = fileURL.lastPathComponent
             }
             else {
                 cell.image2.isHidden = true
@@ -117,11 +123,11 @@ class BarcodePictureViewController: UIViewController, UITableViewDataSource, UIT
             }
             
             if (indexPath.row*4+2 < form.pictures.count) {
-                let url = NSURL(fileURLWithPath: form.pictures[indexPath.row*4+2])
+                let fileURL: URL = directoryURL.appendingPathComponent(form.pictures[indexPath.row*4+2])
                 cell.image3.tag = indexPath.row*4+2
-                cell.image3.image = UIImage(contentsOfFile: url.path!)
+                cell.image3.image = UIImage(contentsOfFile: fileURL.path)
                 cell.image3.addGestureRecognizer(UITapGestureRecognizer(target: self, action: #selector(onImageItemClick)))
-                cell.name3.text = url.lastPathComponent
+                cell.name3.text = fileURL.lastPathComponent
             }
             else {
                 cell.image3.isHidden = true
@@ -129,11 +135,11 @@ class BarcodePictureViewController: UIViewController, UITableViewDataSource, UIT
             }
             
             if (indexPath.row*4+3 < form.pictures.count) {
-                let url = NSURL(fileURLWithPath: form.pictures[indexPath.row*4+3])
+                let fileURL: URL = directoryURL.appendingPathComponent(form.pictures[indexPath.row*4+3])
                 cell.image4.tag = indexPath.row*4+3
-                cell.image4.image = UIImage(contentsOfFile: url.path!)
+                cell.image4.image = UIImage(contentsOfFile: fileURL.path)
                 cell.image4.addGestureRecognizer(UITapGestureRecognizer(target: self, action: #selector(onImageItemClick)))
-                cell.name4.text = url.lastPathComponent
+                cell.name4.text = fileURL.lastPathComponent
             }
             else {
                 cell.image4.isHidden = true

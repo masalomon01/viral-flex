@@ -165,31 +165,31 @@ class HttpRequest {
     static func createRequest(token: String, form: String, farm: String, pictures: [String]) throws -> URLRequest {
         
         let boundary = generateBoundaryString()
+        let urlStr = baseUrl + "/app-forms/images?formName=" + form.addingPercentEncoding(withAllowedCharacters: .urlHostAllowed)! + "&farmName=" + farm.addingPercentEncoding(withAllowedCharacters: .urlHostAllowed)!
+        let requestUrl = URL(string: urlStr)
         
-//                let requestUrl = URL(string: "https://prod.ridehail.metropia.com/v2/rider/image")!
-        let requestUrl = URL(string: baseUrl + "/app-forms/images?formName=" + form + "&farmName=" + farm)!
-        
-        var request = URLRequest(url: requestUrl)
+        var request = URLRequest(url: requestUrl!)
         request.httpMethod = "POST"
         request.setValue(token, forHTTPHeaderField: "Authorization")
         request.setValue("multipart/form-data; boundary=\(boundary)", forHTTPHeaderField: "Content-Type")
-        
         request.httpBody = try createBody(filePathKey: "images", paths: pictures, boundary: boundary)
-        
         return request
     }
     
     static func createBody(filePathKey: String, paths: [String], boundary: String) throws -> Data {
         var body = Data()
         
+        let directoryURL: URL = FileManager.default.urls(for: .documentDirectory, in: .userDomainMask)[0]
+        
         for path in paths {
-            let url = URL(fileURLWithPath: path)
-            let filename = url.lastPathComponent
-            let data = try Data(contentsOf: url)
+            
+            let fileURL: URL = directoryURL.appendingPathComponent(path)
+            let fileName = fileURL.lastPathComponent
+            let data = try Data(contentsOf: fileURL)
             let mimetype = mimeType(for: path)
             
             body.append("--\(boundary)\r\n")
-            body.append("Content-Disposition: form-data; name=\"\(filePathKey)\"; filename=\"\(filename)\"\r\n")
+            body.append("Content-Disposition: form-data; name=\"\(filePathKey)\"; filename=\"\(fileName)\"\r\n")
             body.append("Content-Type: \(mimetype)\r\n\r\n")
             body.append(data)
             body.append("\r\n")

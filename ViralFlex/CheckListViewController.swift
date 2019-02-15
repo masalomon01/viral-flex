@@ -129,8 +129,8 @@ class CheckListViewController: UIViewController, UITableViewDataSource, UITableV
             if vaccination.brand != nil {cell.labelBrand.text = vaccination.brand!}
         }
         
-        cell.addGestureRecognizer(UITapGestureRecognizer(target: self, action: #selector(onCelClick)))
-        cell.checkBox.addGestureRecognizer(UITapGestureRecognizer(target: self, action: #selector(onCelClick)))
+        cell.addGestureRecognizer(UITapGestureRecognizer(target: self, action: #selector(onCellClick)))
+        cell.checkBox.addGestureRecognizer(UITapGestureRecognizer(target: self, action: #selector(onCellClick)))
         
         return cell
     }
@@ -155,7 +155,7 @@ class CheckListViewController: UIViewController, UITableViewDataSource, UITableV
         self.dismiss(animated: true, completion: nil)
     }
     
-    @IBAction func onCelClick(_ sender: UIGestureRecognizer) {
+    @IBAction func onCellClick(_ sender: UIGestureRecognizer) {
         
         var cell: CheckListViewTableCell
         if sender.view is CheckListViewTableCell {
@@ -174,6 +174,10 @@ class CheckListViewController: UIViewController, UITableViewDataSource, UITableV
         }
         else if (checkBox?.isSelected)! && !(sender.view is CheckListViewTableCell) {
             checkBox?.setSelected(selected: false)
+            cell.labelAge.text = ""
+            cell.labelDoses.text = ""
+            cell.labelAdmin.text = ""
+            cell.labelBrand.text = ""
         }
         else {
             checkBox?.setSelected(selected: true)

@@ -94,16 +94,17 @@ class NewFormViewController: UIViewController, UITabBarDelegate, UITextFieldDele
         if pictureCount == 0 {(tabBar.items![1] ).badgeValue = nil}
         else {(tabBar.items![1] ).badgeValue = String(pictureCount)}
         
-        if (viewMode) {
-            clinicalContainer.subviews.forEach({ $0.removeFromSuperview() })
-            for name in form.clinicalSigns {
-                addClinical(name: name)
-            }
-            
-            vaccinationContainer.subviews.forEach({ $0.removeFromSuperview() })
-            for vaccination in form.vaccinations {
-                addVaccination(vaccination)
-            }
+        
+        clinicalContainer.subviews.forEach({ $0.removeFromSuperview() })
+        clinicalContainerHeight.constant = CGFloat(0)
+        for name in form.clinicalSigns {
+            addClinical(name: name)
+        }
+        
+        vaccinationContainer.subviews.forEach({ $0.removeFromSuperview() })
+        vaccinationContainerHeight.constant = CGFloat(0)
+        for vaccination in form.vaccinations {
+            addVaccination(vaccination)
         }
         
         validate()
@@ -447,7 +448,7 @@ class NewFormViewController: UIViewController, UITabBarDelegate, UITextFieldDele
     
     func submit() {
         
-        form.saveDraft()
+        saveDraft()
         selectedFolder?.addForm(form: form)
         form.submit()
     }

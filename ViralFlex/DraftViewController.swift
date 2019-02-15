@@ -164,31 +164,14 @@ class DraftViewController: UIViewController, FolderSelectDelegate, ItemClickDele
                 self.present(controller, animated: true, completion: nil)
             }
         }))
-        /*
-        alertController.addAction(UIAlertAction(title: "Submit", style: .default, handler: { (action) -> Void in
-            
-            if (form.testType != nil && form.farmName != nil && form.country != nil && form.birdType != nil && form.barCodes.count > 0) {
-                
-                form.submit()
-                self.tableViewController.refresh()
-            }
-            else {
-                let alert = UIAlertController(title: "Submission Error", message: "Your form has been savedin Drafts. We were unable to Submit it because not all required fields were filled.", preferredStyle: .alert)
-                alert.addAction(UIAlertAction(title: "Cancel", style: .cancel, handler: nil))
-                alert.addAction(UIAlertAction(title: "Go to Drafts", style: .default, handler: { (action) in
-                    
-                    if let controller = self.storyboard?.instantiateViewController(withIdentifier: "newFormViewController") {
-                        
-                        (controller as! NewFormViewController).form = form
-                        (controller as! NewFormViewController).edit = position
-                        self.present(controller, animated: true, completion: nil)
-                    }
-                }))
-                self.present(alert, animated: true, completion: nil)
-            }
-        })) */
         
         alertController.addAction(UIAlertAction(title: "Cancel", style: .cancel, handler: { (action) -> Void in }))
+        
+        if let popoverController = alertController.popoverPresentationController {
+            popoverController.sourceView = self.view
+            popoverController.sourceRect = CGRect(x: self.view.bounds.midX, y: self.view.bounds.midY, width: 0, height: 0)
+            popoverController.permittedArrowDirections = []
+        }
         
         self.present(alertController, animated: true, completion: nil)
     }

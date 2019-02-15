@@ -65,6 +65,7 @@ class FolderFormViewController: UIViewController, UITableViewDataSource, UITable
         cell.label.text = form.name
         
         cell.options.addTarget(self, action: #selector(onOptionClick), for: .touchUpInside)
+        cell.options.isHidden = (type == "submitted")
         
         let dateFormatter = DateFormatter()
         dateFormatter.dateFormat = "hh:mma\nMM-dd-yy"
@@ -254,10 +255,6 @@ class FolderFormViewController: UIViewController, UITableViewDataSource, UITable
             }))
         }
         
-        //if type == "draft" {
-        //    alertController.addAction(UIAlertAction(title: "View Attachments", style: .default, handler: { (action) -> Void in }))
-        //}
-        
         alertController.addAction(UIAlertAction(title: "Move to Folder", style: .default, handler: { (action) -> Void in
             
             self.selectedForm = form
@@ -273,7 +270,6 @@ class FolderFormViewController: UIViewController, UITableViewDataSource, UITable
             
             alertController.addTextField { (textField) in
                 textField.text = form.name
-                //                textField.addTarget(self, action: #selector(self.textFieldEditingDidChange(_:)), for: .editingChanged)
             }
             
             alertController.addAction(UIAlertAction(title: "Create", style: .default) { (action) in
@@ -307,15 +303,15 @@ class FolderFormViewController: UIViewController, UITableViewDataSource, UITable
             }))
         }
         
-        //if type == "draft" {
-        //    alertController.addAction(UIAlertAction(title: "Submit", style: .default, handler: { (action) -> Void in
-                
-        //        form.submit()
-                self.tableView.reloadData()
-        //    }))
-        //}
+//        self.tableView.reloadData()
         
         alertController.addAction(UIAlertAction(title: "Cancel", style: .cancel, handler: { (action) -> Void in }))
+        
+        if let popoverController = alertController.popoverPresentationController {
+            popoverController.sourceView = self.view
+            popoverController.sourceRect = CGRect(x: self.view.bounds.midX, y: self.view.bounds.midY, width: 0, height: 0)
+            popoverController.permittedArrowDirections = []
+        }
         
         self.present(alertController, animated: true, completion: nil)
     }

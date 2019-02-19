@@ -133,7 +133,6 @@ class DraftViewController: UIViewController, FolderSelectDelegate, ItemClickDele
             
             alertController.addTextField { (textField) in
                 textField.text = form.name
-                //                textField.addTarget(self, action: #selector(self.textFieldEditingDidChange(_:)), for: .editingChanged)
             }
             
             alertController.addAction(UIAlertAction(title: "Create", style: .default) { (action) in
@@ -274,29 +273,24 @@ class DraftViewController: UIViewController, FolderSelectDelegate, ItemClickDele
         let forms = tableViewController.getSelectedForms()
         var status: Int = 0
         dialog.labelError.isHidden = true
-        let myGroup = DispatchGroup()
-        for form in forms {
-            myGroup.enter()
-            HttpRequest.submitForm(form, pin: pin, onRequestSuccess: {response in
-                print(response.statusCode)
-                status = response.statusCode
-                form.submit()
-                myGroup.leave()
-            }, onRequestFailed: {response in
-                print(response.statusCode)
-                status = response.statusCode
-                myGroup.leave()
-            })
-        }
-        myGroup.notify(queue: .main) {
-            print("Finished all requests.")
+        
+        HttpRequest.submitForm(forms, pin: pin, onRequestSuccess: {response in
+            print(response.statusCode)
+            status = response.statusCode
+            
             if status == 200{
+                
+                forms.forEach({form in
+                    form.submit()
+                })
+                
                 if let controller = self.storyboard?.instantiateViewController(withIdentifier: "submitSuccessViewController") {
                     (controller as! SubmitSuccessViewController).previousViewController = self
                     self.present(controller, animated: true, completion: nil)
                 }
             }
             else {
+                
                 if status == 401 {
                     dialog.labelError.isHidden = false
                 }
@@ -310,8 +304,11 @@ class DraftViewController: UIViewController, FolderSelectDelegate, ItemClickDele
             self.checkBox.isSelected = false
             self.tableViewController.deselectAll()
             self.toggleSelectionMenu(visible: true)
-        }
-        
+            
+        }, onRequestFailed: {response in
+            print(response.statusCode)
+            status = response.statusCode
+        })
     }
     
     

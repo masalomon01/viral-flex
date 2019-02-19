@@ -339,23 +339,17 @@ class FolderFormViewController: UIViewController, UITableViewDataSource, UITable
         let forms = getSelectedForms()
         var status: Int = 0
         dialog.labelError.isHidden = true
-        let myGroup = DispatchGroup()
-        for form in forms {
-            myGroup.enter()
-            HttpRequest.submitForm(form, pin: pin, onRequestSuccess: {response in
-                print(response.statusCode)
-                status = response.statusCode
-                form.submit()
-                myGroup.leave()
-            }, onRequestFailed: {response in
-                print(response.statusCode)
-                status = response.statusCode
-                myGroup.leave()
-            })
-        }
-        myGroup.notify(queue: .main) {
-            print("Finished all requests.")
+        
+        HttpRequest.submitForm(forms, pin: pin, onRequestSuccess: {response in
+            print(response.statusCode)
+            status = response.statusCode
+            
             if status == 200{
+                
+                forms.forEach{form in
+                    form.submit()
+                }
+                
                 if let controller = self.storyboard?.instantiateViewController(withIdentifier: "submitSuccessViewController") {
                     (controller as! SubmitSuccessViewController).previousViewController = self
                     self.present(controller, animated: true, completion: nil)
@@ -376,7 +370,11 @@ class FolderFormViewController: UIViewController, UITableViewDataSource, UITable
             
             self.checkBox.isSelected = true
             self.onHeaderCheckBoxClick(self.checkBox)
-        }
+            
+        }, onRequestFailed: {response in
+            print(response.statusCode)
+            status = response.statusCode
+        })
     }
 }
 

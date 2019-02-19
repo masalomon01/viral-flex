@@ -117,7 +117,7 @@ class CheckListViewController: UIViewController, UITableViewDataSource, UITableV
             for selected in selectedResult {
                 if (selected as! Vaccination).name.replacingOccurrences(of: "\n", with: " ") == vaccination.name.replacingOccurrences(of: "\n", with: " ") {
                     vaccination = selected as! Vaccination
-//                    row![indexPath.section][indexPath.row] = vaccination
+                    row![indexPath.section][indexPath.row] = vaccination
                     cell.checkBox.isSelected = true
                     
                     if vaccination.age != nil {cell.labelAge.text = String(vaccination.age!)}
@@ -180,7 +180,7 @@ class CheckListViewController: UIViewController, UITableViewDataSource, UITableV
             checkBox?.setSelected(selected: true)
             
             let dialog = Dialog()
-            dialog.vaccination = selectedItem as? Vaccination
+            dialog.vaccination = (selectedItem as? Vaccination)
             dialog.vaccinationsDelegate = self
             dialog.show()
             dialog.setup(Dialog.TYPE_VACCINATIONS)
@@ -199,7 +199,7 @@ class CheckListViewController: UIViewController, UITableViewDataSource, UITableV
         if selectedItem is Vaccination {
             
             selected = nil
-            let index = selectedResult.firstIndex(where: { ($0 as! Vaccination).uuid == (selectedItem as! Vaccination).uuid})
+            let index = selectedResult.firstIndex(where: { ($0 as! Vaccination).name == (selectedItem as! Vaccination).name})
             
             if !(checkBox?.isSelected)! {
                 

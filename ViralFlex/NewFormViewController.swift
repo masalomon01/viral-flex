@@ -123,10 +123,10 @@ class NewFormViewController: UIViewController, UITabBarDelegate, UITextFieldDele
         }
         else {
             (segue.destination as! CheckListViewController).section = vaccinationSection
-            (segue.destination as! CheckListViewController).row = vaccinationRow
+            (segue.destination as! CheckListViewController).row = vaccinationRow.map { $0.map({$0.copy()}) }
             (segue.destination as! CheckListViewController).checkListSelectDelegate = self
             (segue.destination as! CheckListViewController).navigationTitleString = "Vaccination Treatments"
-            (segue.destination as! CheckListViewController).selectedResult = form.vaccinations
+            (segue.destination as! CheckListViewController).selectedResult = form.vaccinations.map { $0.copy() }
         }
     }
     
@@ -230,7 +230,7 @@ class NewFormViewController: UIViewController, UITabBarDelegate, UITextFieldDele
         
         self.getData()
         dialog.labelError.isHidden = true
-        HttpRequest.submitForm(form, pin: pin, onRequestSuccess: {response in
+        HttpRequest.submitForm([form], pin: pin, onRequestSuccess: {response in
             
             print(response.statusCode)
             

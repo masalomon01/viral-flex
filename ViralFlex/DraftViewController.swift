@@ -289,17 +289,6 @@ class DraftViewController: UIViewController, FolderSelectDelegate, ItemClickDele
                     self.present(controller, animated: true, completion: nil)
                 }
             }
-            else {
-                
-                if status == 401 {
-                    dialog.labelError.isHidden = false
-                }
-                else {
-                    let errorDialog = ErrorDialog()
-                    errorDialog.setup()
-                    errorDialog.show()
-                }
-            }
             self.tableViewController.refresh()
             self.checkBox.isSelected = false
             self.tableViewController.deselectAll()
@@ -308,6 +297,15 @@ class DraftViewController: UIViewController, FolderSelectDelegate, ItemClickDele
         }, onRequestFailed: {response in
             print(response.statusCode)
             status = response.statusCode
+            
+            if status == 401 {
+                dialog.labelError.isHidden = false
+            }
+            else {
+                let errorDialog = ErrorDialog()
+                errorDialog.setup()
+                errorDialog.show()
+            }
         })
     }
     

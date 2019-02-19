@@ -161,10 +161,14 @@ class HttpRequest {
                             }
                         })
                         
-                        onRequestSuccess(response as! HTTPURLResponse)
+                        DispatchQueue.main.async {
+                            onRequestSuccess(response as! HTTPURLResponse)
+                        }
                     }
                     else {
-                        onRequestFailed(response as! HTTPURLResponse)
+                        DispatchQueue.main.async {
+                            onRequestFailed(response as! HTTPURLResponse)
+                        }
                     }
                 }
                 }.resume()

@@ -245,17 +245,15 @@ class NewFormViewController: UIViewController, UITabBarDelegate, UITextFieldDele
             
             print(response.statusCode)
             
-            DispatchQueue.main.async {
-                
-                if response.statusCode == 401 {
-                    dialog.labelError.isHidden = false
-                }
-                else if response.statusCode == 500 {
-                    let errorDialog = ErrorDialog()
-                    errorDialog.setup()
-                    errorDialog.show()
-                }
+            if response.statusCode == 401 {
+                dialog.labelError.isHidden = false
             }
+            else if response.statusCode == 500 {
+                let errorDialog = ErrorDialog()
+                errorDialog.setup()
+                errorDialog.show()
+            }
+            
         })
     }
     
